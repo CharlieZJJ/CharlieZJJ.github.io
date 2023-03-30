@@ -202,15 +202,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/29/rtr-Chapter3/" target="_self">
+        <a href="/2023/03/29/Graphics/RealTimeRendering/rtr-chapter3/" target="_self">
           rtr_Chapter3
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/29/rtr-Chapter3/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/29/Graphics/RealTimeRendering/rtr-chapter3/" target="_self">
         <div>
-          有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 3 The Graphics Processing Unit 3.1 Data-Parallel Architectures
+          有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 3 The Graphics Processing Unit 3.1 Data-Parallel Architectures CPU通过分支预测、指令重排等技术来降低延迟的影响。而GPU通过数千个shader cores来降低延迟。GPU的任务主要是处理类似的数据，因此可以尽可能的使用并行技术来加速。 GPU主
         </div>
       </a>
 
@@ -263,13 +263,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/29/SpiralMatrix/" target="_self">
+        <a href="/2023/03/29/Alogrithm/Array/SpiralMatrix/" target="_self">
           SpiralMatrix
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/29/SpiralMatrix/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/29/Alogrithm/Array/SpiralMatrix/" target="_self">
         <div>
           59. 螺旋矩阵 II 这道题主要问题是细节的把握，主要问题是要掌握好边界的处理和循环不变式的控制。   本图取自于代码随想录，如有侵权立即删除  最重要的问题是四个边角的处理，到底哪一次循环来做这些任务？一个很重要的想法就是：保证每次循环做的任务类似！例如红色我们只处理开始点，不处理结束点，对于绿色、橙色和棕色都是这样。这就是循环不变式：\([start, end)\)。注意到了
         </div>
@@ -324,15 +324,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/28/MinimumSizeSubarraySum/" target="_self">
+        <a href="/2023/03/28/Alogrithm/Array/MinimumSizeSubArraySum/" target="_self">
           MinimumSizeSubarraySum
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/28/MinimumSizeSubarraySum/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/28/Alogrithm/Array/MinimumSizeSubArraySum/" target="_self">
         <div>
-          滑动窗口 209. 长度最小的子数组 暴力法很容易想到，就是枚举窗口的起始位置和终止位置： 123456789101112131415161718192021222324use std::cmp::min;impl Solution &#123;    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32
+          209. 长度最小的子数组 暴力法很容易想到，就是枚举窗口的起始位置和终止位置： 123456789101112131415161718192021222324use std::cmp::min;impl Solution &#123;    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 &#123
         </div>
       </a>
 
@@ -385,15 +385,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/27/RemoveElement/" target="_self">
+        <a href="/2023/03/27/Alogrithm/Array/RemoveElement/" target="_self">
           RemoveElement
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/27/RemoveElement/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/27/Alogrithm/Array/RemoveElement/" target="_self">
         <div>
-          移除元素 27. 移除元素 首先是暴力法，也就是两层for，外层遇到target的时候就开启内层，将target之后的元素依次前移即可。唯一要注意的地方就是当数组整体前移1位的时候，i也需要前移1位。   本图取自于代码随想录，如有侵权立即删除  1234567891011121314151617impl Solution &#123;    pub fn remove_eleme
+          27. 移除元素 首先是暴力法，也就是两层for，外层遇到target的时候就开启内层，将target之后的元素依次前移即可。唯一要注意的地方就是当数组整体前移1位的时候，i也需要前移1位。   本图取自于代码随想录，如有侵权立即删除  1234567891011121314151617impl Solution &#123;    pub fn remove_element(num
         </div>
       </a>
 
@@ -446,15 +446,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/26/BinarySearch/" target="_self">
+        <a href="/2023/03/26/Alogrithm/Array/BinarySearch/" target="_self">
           BinarySearch
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/26/BinarySearch/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/26/Alogrithm/Array/BinarySearch/" target="_self">
         <div>
-          二分搜索 704. 二分查找 二分搜索最重要的是掌握现在是根据什么区间来写的。 一般情况下，二分搜索使用的区间有两种，第一种是\([left, right]\)，第二种是\([left, right)\)。这两种的区别就在于，right能否取到。一般来说，一个二分搜索的伪代码如下： 12345678910111213left = 0right = ??while left ?? rig
+          704. 二分查找 二分搜索最重要的是掌握现在是根据什么区间来写的。 一般情况下，二分搜索使用的区间有两种，第一种是\([left, right]\)，第二种是\([left, right)\)。这两种的区别就在于，right能否取到。一般来说，一个二分搜索的伪代码如下： 12345678910111213left = 0right = ??while left ?? right &#1
         </div>
       </a>
 
@@ -507,13 +507,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/26/rtr-Chapter2/" target="_self">
+        <a href="/2023/03/26/Graphics/RealTimeRendering/rtr-chapter2/" target="_self">
           rtr-Chapter2
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/26/rtr-Chapter2/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/26/Graphics/RealTimeRendering/rtr-chapter2/" target="_self">
         <div>
           有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 2 图形渲染管线 2.1 架构 一个未使用管线的系统，在划分为n个管线子阶段后可以加速n倍。 实时渲染系统之中可以将渲染管线粗略的分为四个阶段，这些阶段之中又可能包含更细小的管线，也可以并行。   image-20230326112819822  渲染速度可以通过fps来表示，也可以使用Hertz（HZ）来
         </div>
@@ -568,13 +568,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/24/rtr-Chapter1/" target="_self">
+        <a href="/2023/03/24/Graphics/RealTimeRendering/rtr-chapter1/" target="_self">
           rtr-chapter1
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/24/rtr-Chapter1/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/24/Graphics/RealTimeRendering/rtr-chapter1/" target="_self">
         <div>
           有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 1 介绍 1.1 introduction 刷新率和帧率是不一样的。帧率是每秒展示的独一无二的图像的数量，也被叫做FPS。刷新率则取决于显示器。当帧率较低时，显示器通过让每个图片显示多次以达到刷新率。当帧率较高时，只有部分图像被显示，同样刷新率不会超过显示器的规格。 1.2 Notation and Definiti
         </div>
@@ -629,13 +629,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2023/03/22/ViewMatrix/" target="_self">
+        <a href="/2023/03/22/Graphics/Math/ViewTransform/" target="_self">
           ViewMatrix
         </a>
       </h1>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/22/ViewMatrix/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/03/22/Graphics/Math/ViewTransform/" target="_self">
         <div>
           View变换 之前学习过Games 101，在看过View变换之后一直有个疑惑。记录一下 数学知识 同一个位置，在不同的坐标系下有不同的坐标，这是毋庸置疑的。那么我们假设\(u=\{u_1, u_2, u_3\}\)和\(v=\{v_1, v_2, v_3\}\) 是3维线性空间S的两组基。 他们之间可以相互表示，也就是说存在9个标量\(\lambda_{ij}\)使得： \[ \beg
         </div>

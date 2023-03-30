@@ -16,22 +16,25 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 3 The Graphics Processing Unit 3.1 Data-Parallel Architectures">
+    <meta name="description" content="View变换 之前学习过Games 101，在看过View变换之后一直有个疑惑。记录一下 数学知识 同一个位置，在不同的坐标系下有不同的坐标，这是毋庸置疑的。那么我们假设\(u&#x3D;\{u_1, u_2, u_3\}\)和\(v&#x3D;\{v_1, v_2, v_3\}\) 是3维线性空间S的两组基。 他们之间可以相互表示，也就是说存在9个标量\(\lambda_{ij}\)使得： \[ \beg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="rtr_Chapter3">
-<meta property="og:url" content="https://charliezjj.github.io/2023/03/29/rtr-Chapter3/index.html">
+<meta property="og:title" content="ViewMatrix">
+<meta property="og:url" content="https://charliezjj.github.io/2023/03/22/Graphics/Math/ViewTransform/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 3 The Graphics Processing Unit 3.1 Data-Parallel Architectures">
+<meta property="og:description" content="View变换 之前学习过Games 101，在看过View变换之后一直有个疑惑。记录一下 数学知识 同一个位置，在不同的坐标系下有不同的坐标，这是毋庸置疑的。那么我们假设\(u&#x3D;\{u_1, u_2, u_3\}\)和\(v&#x3D;\{v_1, v_2, v_3\}\) 是3维线性空间S的两组基。 他们之间可以相互表示，也就是说存在9个标量\(\lambda_{ij}\)使得： \[ \beg">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-29T14:43:45.000Z">
-<meta property="article:modified_time" content="2023-03-29T14:49:01.345Z">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/22/Graphics/Math/ViewTransform/image-20230322214554190.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/22/Graphics/Math/ViewTransform/image-20230322215505752.png">
+<meta property="article:published_time" content="2023-03-22T02:27:28.000Z">
+<meta property="article:modified_time" content="2023-03-30T07:26:23.623Z">
 <meta property="article:author" content="Charlie">
-<meta property="article:tag" content="Real-Time Rendering">
+<meta property="article:tag" content="Transform">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://charliezjj.github.io/2023/03/22/Graphics/Math/ViewTransform/image-20230322214554190.png">
   
   
   
-  <title>rtr_Chapter3 - Charlie&#39;s Blog</title>
+  <title>ViewMatrix - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -173,7 +176,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="rtr_Chapter3"></span>
+            <span id="subtitle" data-typed-text="ViewMatrix"></span>
           
         </div>
 
@@ -184,8 +187,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-29 22:43" pubdate>
-          2023年3月29日 晚上
+        <time datetime="2023-03-22 10:27" pubdate>
+          2023年3月22日 上午
         </time>
       </span>
     
@@ -196,7 +199,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          86 字
+          5k 字
         
       </span>
     
@@ -207,7 +210,7 @@
         
         
         
-          1 分钟
+          42 分钟
         
       </span>
     
@@ -245,18 +248,198 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">rtr_Chapter3</h1>
+            <h1 style="display: none">ViewMatrix</h1>
             
             
               <div class="markdown-body">
                 
-                <blockquote>
-<p>有些翻译是我自己认为的翻译，不一定符合常规的翻译</p>
+                <h1 id="view变换">View变换</h1>
+<p>之前学习过Games 101，在看过View变换之后一直有个疑惑。记录一下</p>
+<h2 id="数学知识">数学知识</h2>
+<p>同一个位置，在不同的坐标系下有不同的坐标，这是毋庸置疑的。那么我们假设<span class="math inline">\(u=\{u_1, u_2, u_3\}\)</span>和<span class="math inline">\(v=\{v_1, v_2, v_3\}\)</span>
+是3维线性空间S的两组基。 他们之间可以相互表示，也就是说存在9个标量<span class="math inline">\(\lambda_{ij}\)</span>使得： <span class="math display">\[
+\begin{align*}
+u_1 &amp;= \lambda_{11}v_1 + \lambda_{12}v_2 + \lambda_{13}v_3 \\
+u_2 &amp;= \lambda_{21}v_1 + \lambda_{22}v_2 + \lambda_{23}v_3 \\
+u_3 &amp;= \lambda_{31}v_1 + \lambda_{32}v_2 + \lambda_{33}v_3
+\end{align*}
+\]</span> 写成矩阵形式就是： <span class="math display">\[
+M = \begin{bmatrix}\lambda_{11} &amp; \lambda_{12} &amp; \lambda_{13} \\
+\lambda_{21} &amp; \lambda_{22} &amp; \lambda_{23} \\ \lambda_{31} &amp;
+\lambda_{32} &amp; \lambda_{33} \\ \end{bmatrix}
+\]</span> 那么上面的式子可以写成： <span class="math display">\[
+u = M v
+\]</span>
+这个M就被称为过渡矩阵。通过矩阵M，可以把向量在u下的表示转换为v下的表示，通过<span class="math inline">\(M^{-1}\)</span>可以把向量在v下的表示转换为在u下的表示。</p>
+<p>现在假设有一个向量<span class="math inline">\(\omega\)</span>，它在u和v下的表示分别为： <span class="math display">\[
+\begin{align*}
+w &amp;= a_1v_1 + a_2v_2 + a_3v_3 = a^Tv \\
+  &amp;= b_1u_1 + b_2u_2 + b_3u_3 = b^Tu
+\end{align*}
+\]</span> 其中： <span class="math display">\[
+\begin{align}
+a = \begin{bmatrix}a_1 \\ a_2 \\ a_3\end{bmatrix} \\\\
+b = \begin{bmatrix}b_1 \\ b_2 \\ b_3\end{bmatrix}
+\end{align}
+\]</span> 我们有： <span class="math display">\[
+a^Tv = b^Tu
+\]</span></p>
+<p>将2式代入4式可得： <span class="math display">\[
+\begin{align}
+a = M^Tb \\
+b = (M^T)^{-1}a = Ta
+\end{align}
+\]</span> 其中： <span class="math display">\[
+M^T = \begin{bmatrix}\lambda_{11} &amp; \lambda_{21} &amp; \lambda_{31}
+\\ \lambda_{12} &amp; \lambda_{22} &amp; \lambda_{32} \\ \lambda_{13}
+&amp; \lambda_{23} &amp; \lambda_{33} \\ \end{bmatrix}
+\]</span>
+现在我们可以发现：矩阵之中的三个列向量，就是基u在基v下的坐标表示！也就是说：
+<span class="math display">\[
+M^T = ([u_1]_v,[u_2]_v,[u_3]_v)
+\]</span> 对应的矩阵<span class="math inline">\((M^T)^{-1}\)</span>就是v在u下的坐标表示： <span class="math display">\[
+(M^T)^{-1} = ([v_1]_u, [v_2]_u, [v_3]_u)
+\]</span> 那么我们可以把5式改写成： <span class="math display">\[
+[w]_v = [u]_v[w]_u \\
+[w]_u = [v]_u[w]_v
+\]</span>
+我们发现，要在两个基之间转换坐标，只需要求出一个基在另一个基里的坐标表示即可。这个坐标表示构成矩阵<span class="math inline">\(M^T\)</span>或者<span class="math inline">\((M^T)^{-1}\)</span></p>
+<h3 id="举个栗子">举个栗子</h3>
+<p>基u为： <span class="math display">\[
+u_1=(1, 2, 1, 0), u_2 = (3, 3, 3, 0), u_3 = (2, -10, 0, 0), u_4 = (-2,
+1, -6, 2)
+\]</span> 基v为： <span class="math display">\[
+v_1=(1, 2, 1, 0), v_2 = (1, -1, 1, 0), v_3 = (1, 0, -1, 0), v_4 = (0, 0,
+0, 2)
+\]</span> 我们发现： <span class="math display">\[
+\begin{align*}
+v_1 &amp;= u_1 \\
+v_2 &amp;= -2u_1 + u_2 \\
+v_3 &amp;= 11u_1 - 4u_2 + u_3 \\
+v_4 &amp;= -27u_1 + 11u_2 - 2u_3 + u_4
+\end{align*}
+\]</span> 也就是说： <span class="math display">\[
+[v]_u = \begin{bmatrix}1 &amp; -2 &amp; 11 &amp; -27 \\ 0 &amp; 1 &amp;
+-4 &amp; 11 \\ 0 &amp; 0 &amp; 1 &amp; -2 \\ 0 &amp; 0 &amp; 0 &amp;
+1\end{bmatrix}
+\]</span> 同理可得： <span class="math display">\[
+\begin{align*}
+u_1 &amp;= v_1 \\
+u_2 &amp;= 2v_1 + v_2 \\
+u_3 &amp;= -3v_1 + 4v_2 + v_3 \\
+u_4 &amp;= -v_1 - 3v_2 + 2v_3 + v_4
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[
+[u]_v = \begin{bmatrix}1 &amp; 2 &amp; -3 &amp; -1 \\ 0 &amp; 1 &amp; 4
+&amp; -3 \\ 0 &amp; 0 &amp; 1 &amp; 2 \\ 0 &amp; 0 &amp; 0 &amp;
+1\end{bmatrix}
+\]</span></p>
+<p>现在给定向量<span class="math inline">\(w = (6, -1, 2,
+2)\)</span>，容易验证： <span class="math display">\[
+\begin{align}
+w = v_1 + 3v_2 + 2v_3 + v_4 \\
+[w]_v = \begin{bmatrix}1 \\ 3 \\ 2 \\ 1\end{bmatrix}
+\end{align}
+\]</span> 那么 <span class="math display">\[
+[w]_u=[v]_u[w]_v = \begin{bmatrix}1 &amp; -2 &amp; 11 &amp; -27 \\ 0
+&amp; 1 &amp; -4 &amp; 11 \\ 0 &amp; 0 &amp; 1 &amp; -2 \\ 0 &amp; 0
+&amp; 0 &amp; 1\end{bmatrix}\begin{bmatrix}1 \\ 3 \\ 2 \\ 1\end{bmatrix}
+= \begin{bmatrix}-10 \\ 6 \\ 0 \\ 1\end{bmatrix}
+\]</span> 容易验证： <span class="math display">\[
+\begin{align}
+w = -10u_1 + 6u_2 + u_4 \\
+[u]_v^{-1} = [v]_u
+\end{align}
+\]</span> 总结一下就是，现在有两个坐标系<span class="math inline">\(f_1\)</span>和<span class="math inline">\(f_2\)</span>，我们想要获得在<span class="math inline">\(f_2\)</span>下的物体在<span class="math inline">\(f_1\)</span>之中的表示，就需要：</p>
+<ul>
+<li>使用<span class="math inline">\(f_1\)</span>表示<span class="math inline">\(f_2\)</span>，获得一个矩阵</li>
+<li>将这个矩阵乘以该物体使用<span class="math inline">\(f_2\)</span>表示出来的矩阵</li>
+</ul>
+<p>即可。</p>
+<h3 id="要点">要点</h3>
+<p>事实上，线性变换矩阵的每一列表示的都是变换后的坐标系的x、y、z轴的单位向量的表示。</p>
+<p>先看这样一个图：</p>
+<figure>
+<img src="/2023/03/22/Graphics/Math/ViewTransform/image-20230322214554190.png" srcset="/img/loading.gif" lazyload alt="image-20230322214554190">
+<figcaption aria-hidden="true">image-20230322214554190</figcaption>
+</figure>
+<p>a点的坐标是(1, 1)，可以表示为 <span class="math display">\[
+\begin{align*}
+oa &amp;= 1 \cdot i + 1 \cdot j \\
+   &amp;= 1 \cdot \begin{bmatrix}1 \\ 0\end{bmatrix} + 1 \cdot
+\begin{bmatrix}0 \\ 1\end{bmatrix} \\
+   &amp;= \begin{bmatrix}1 \\ 1\end{bmatrix}
+\end{align*}
+\]</span> 接下来旋转45°，</p>
+<figure>
+<img src="/2023/03/22/Graphics/Math/ViewTransform/image-20230322215505752.png" srcset="/img/loading.gif" lazyload alt="image-20230322215505752">
+<figcaption aria-hidden="true">image-20230322215505752</figcaption>
+</figure>
+<p>可以看到现在的坐标系下， <span class="math display">\[
+\begin{align*}
+oa &amp;= 1 \cdot i + 1 \cdot j \\
+   &amp;= 1 \cdot \begin{bmatrix}\frac{\sqrt2}{2}
+\\\frac{\sqrt2}{2}\end{bmatrix} + 1 \cdot
+\begin{bmatrix}-\frac{\sqrt2}{2} \\ \frac{\sqrt2}{2}\end{bmatrix} \\
+   &amp;= \begin{bmatrix}\frac{\sqrt2}{2} &amp; -\frac{\sqrt2}{2} \\
+\frac{\sqrt2}{2} &amp; \frac{\sqrt2}{2}\end{bmatrix} \begin{bmatrix}1 \\
+1\end{bmatrix} \\
+   &amp;= \begin{bmatrix}0 \\ \sqrt2\end{bmatrix}
+\end{align*}
+\]</span> 好了，现在可以发现这个规律了。</p>
+<blockquote>
+<p>线性变换矩阵的每一列表示的都是变换后的坐标系的x、y、z轴的单位向量的表示。</p>
 </blockquote>
-<h1 id="chapter-3-the-graphics-processing-unit">Chapter 3 The Graphics
-Processing Unit</h1>
-<h2 id="data-parallel-architectures">3.1 Data-Parallel
-Architectures</h2>
+<p>另外，我们其实可以发现，在你对整个坐标系进行线性变换后，如果对原来的坐标不加更改的话，才是在新坐标系下的坐标，假如使用变换矩阵的话，就是在原坐标系下表示！</p>
+<p>例如A(1, ,1)，计算MatA · A =
+B得到的B是经过线性变换后A的坐标，还是使用的<span class="math inline">\(xyzo\)</span>表示，而A本身则是使用了<span class="math inline">\(x_2y_2z_2o\)</span>表示。所以MatA的作用其实是将新坐标系下点的坐标转换为原坐标系下点的坐标。这一点记住了，对于以后的理解很有帮助。</p>
+<h2 id="view">View</h2>
+<p>视图变化就是：我们将世界坐标系经过旋转平移移动到摄像机坐标系，并对世界坐标系内原有的顶点坐标做出同样的变换。
+<span class="math display">\[
+view = [R_w]_c[T_w]_c = [R_c]_w^{-1}[T_c]_w^{-1}
+\]</span> 首先是简单的旋转变换： <span class="math display">\[
+[R_c]_w = \begin{bmatrix}s_x &amp; u_x &amp; -f_x &amp; 0\\s_y &amp; u_y
+&amp; -f_y &amp; 0\\s_z &amp; u_z &amp; -f_z &amp; 0\\0 &amp; 0 &amp; 0
+&amp; 1\end{bmatrix}
+\]</span> 然后是更简单的平移变换： <span class="math display">\[
+[T_c]_w = \begin{bmatrix}1 &amp; 0 &amp; 0 &amp; e_x \\ 0 &amp; 1 &amp;
+0 &amp; e_y \\  0 &amp; 0 &amp; 1 &amp; e_z \\  0 &amp; 0 &amp; 0 &amp;
+1\end{bmatrix}
+\]</span> 接下来就好求了： <span class="math display">\[
+\begin{align*}
+view &amp;= [R_c]_w^{-1}[T_c]_w^{-1} \\
+     &amp;= \begin{bmatrix}s_x &amp; s_y &amp; s_z &amp; 0 \\ u_x &amp;
+u_y &amp; u_z &amp; 0  \\ -f_x &amp; -f_y &amp; -f_z &amp; 0 \\ 0 &amp;
+0 &amp; 0 &amp; 1 \end{bmatrix}\begin{bmatrix}1 &amp; 0 &amp; 0 &amp;
+-e_x \\ 0 &amp; 1 &amp; 0 &amp; -e_y \\  0 &amp; 0 &amp; 1 &amp; -e_z
+\\  0 &amp; 0 &amp; 0 &amp; 1\end{bmatrix} \\
+     &amp;= \begin{bmatrix}s_x &amp; s_y &amp; s_z &amp; -(s\cdot e) \\
+u_x &amp; u_y &amp; u_z &amp; -(u\cdot e) \\ -f_x &amp; -f_y &amp; -f_z
+&amp; f\cdot e \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{bmatrix}
+\end{align*}
+\]</span> 而lookat函数，事实上就是在求view矩阵。</p>
+<h3 id="另一种较为直接的办法">另一种较为直接的办法</h3>
+<p>事实上，这就是在变换坐标系，我们需要把坐标从世界坐标变换到相机坐标系。
+<span class="math display">\[
+[p]_{camera} = [world]_{camera}[p]_{world} =
+[camera]_{world}^{-1}[p]_{world} = view[p]_{world}
+\]</span> 我们需要求的<span class="math inline">\([camera]_{world}^{-1}\)</span>，就是camera在world下的表示，并求逆。
+<span class="math display">\[
+\begin{align*}
+view &amp;= [camera]_{world}^{-1} \\
+     &amp;= \begin{bmatrix}s[0] &amp; s[1] &amp; s[2] &amp; -dot(s, eye)
+\\ u[0] &amp; u[1] &amp; u[2] &amp; -dot(u, eye) \\ -f[0] &amp; -f[1]
+&amp; -f[2] &amp; dot(f, eye) \\ 0 &amp; 0 &amp; 0 &amp; 1\end{bmatrix}
+\end{align*}
+\]</span> 本文参考了：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44179561/article/details/124149297">[OpenGL]
+视图矩阵...</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wangdingqiaoit/article/details/51394238">OpenGL学习脚印:
+坐标...</a></p>
+<p><a target="_blank" rel="noopener" href="https://pengfeixc.com/blogs/computer-graphics/3D-matrix-transformation-part-two">3D图形学中的矩阵变换（二）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744/?p=3&amp;spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=7af60262c7cccf863e49fcf16456f9bc">Games
+101</a></p>
 
                 
               </div>
@@ -290,7 +473,7 @@ Architectures</h2>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Real-Time-Rendering/">#Real-Time Rendering</a>
+        <a href="/tags/Transform/">#Transform</a>
       
     </div>
   
@@ -302,8 +485,8 @@ Architectures</h2>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>rtr_Chapter3</div>
-      <div>https://charliezjj.github.io/2023/03/29/rtr-Chapter3/</div>
+      <div>ViewMatrix</div>
+      <div>https://charliezjj.github.io/2023/03/22/Graphics/Math/ViewTransform/</div>
     </div>
     <div class="license-meta">
       
@@ -315,7 +498,7 @@ Architectures</h2>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月29日</div>
+          <div>2023年3月22日</div>
         </div>
       
       
@@ -347,15 +530,15 @@ Architectures</h2>
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/03/24/Graphics/RealTimeRendering/rtr-chapter1/" title="rtr-chapter1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">rtr-chapter1</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2023/03/29/SpiralMatrix/" title="SpiralMatrix">
-                        <span class="hidden-mobile">SpiralMatrix</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
