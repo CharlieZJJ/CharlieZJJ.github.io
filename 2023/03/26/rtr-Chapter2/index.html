@@ -19,25 +19,25 @@
     <meta name="description" content="有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 2 图形渲染管线 2.1 架构 一个未使用管线的系统，在划分为n个管线子阶段后可以加速n倍。 实时渲染系统之中可以将渲染管线粗略的分为四个阶段，这些阶段之中又可能包含更细小的管线，也可以并行。   image-20230326112819822  渲染速度可以通过fps来表示，也可以使用Hertz（HZ）来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rtr-Chapter2">
-<meta property="og:url" content="http://example.com/2023/03/26/rtr-Chapter2/index.html">
+<meta property="og:url" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
 <meta property="og:description" content="有些翻译是我自己认为的翻译，不一定符合常规的翻译  Chapter 2 图形渲染管线 2.1 架构 一个未使用管线的系统，在划分为n个管线子阶段后可以加速n倍。 实时渲染系统之中可以将渲染管线粗略的分为四个阶段，这些阶段之中又可能包含更细小的管线，也可以并行。   image-20230326112819822  渲染速度可以通过fps来表示，也可以使用Hertz（HZ）来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326112819822.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326114132326.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326120714123.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326120743481.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326145252077.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326150131479.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326151806829.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326152130938.png">
-<meta property="og:image" content="http://example.com/2023/03/26/rtr-Chapter2/pipeline.jpg">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326112819822.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326114132326.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326120714123.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326120743481.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326145252077.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326150131479.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326151806829.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326152130938.png">
+<meta property="og:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/pipeline.jpg">
 <meta property="article:published_time" content="2023-03-26T03:08:46.000Z">
 <meta property="article:modified_time" content="2023-03-26T10:03:13.461Z">
 <meta property="article:author" content="Charlie">
 <meta property="article:tag" content="Real-Time Rendering">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/03/26/rtr-Chapter2/image-20230326112819822.png">
+<meta name="twitter:image" content="https://charliezjj.github.io/2023/03/26/rtr-Chapter2/image-20230326112819822.png">
   
   
   
@@ -79,7 +79,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"Rust"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"charliezjj.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"❡"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"Rust"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -429,7 +429,7 @@ buffer，他存储像素的透明度。alpha测试用于保证完全透明的片
   <div class="license-box my-3">
     <div class="license-title">
       <div>rtr-Chapter2</div>
-      <div>http://example.com/2023/03/26/rtr-Chapter2/</div>
+      <div>https://charliezjj.github.io/2023/03/26/rtr-Chapter2/</div>
     </div>
     <div class="license-meta">
       
