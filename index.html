@@ -202,15 +202,76 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/note/Algorithm/List/Design/" target="_self">
+          Design
+        </a>
+      </h1>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/note/Algorithm/List/Design/" target="_self">
+        <div>
+          707. Design Linked List 这题主要是难在rust写个链表有点费劲。。 // 通过结合Option可以定义一个良好的链表的数据结构。 struct MyLinkedList &#123;     pub val: i32,     pub next: Option&lt;Box&lt;MyLinkedList&gt;&gt;, &#125;  impl MyLinkedL
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-01 18:18" pubdate>
+              2023-04-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/List/">#List</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/note/Algorithm/List/RemoveElement/" target="_self">
-          post
+          RemoveElement
         </a>
       </h1>
 
       
       <a class="index-excerpt index-excerpt__noimg" href="/note/Algorithm/List/RemoveElement/" target="_self">
         <div>
-          
+          203. 移除链表元素 其实移除链表元素倒还好说，主要是rust写链表挺费劲的。。 impl Solution &#123;     pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; &#123;         /
         </div>
       </a>
 
@@ -224,6 +285,34 @@
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/List/">#List</a>
+            
+          </div>
         
       </div>
     </article>
@@ -365,7 +454,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/note/Algorithm/Array/MinimumSizeSubArraySum/" target="_self">
         <div>
-          209. 长度最小的子数组 暴力法很容易想到，就是枚举窗口的起始位置和终止位置： 123456789101112131415161718192021222324use std::cmp::min;impl Solution &#123;    pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 &#123
+          209. 长度最小的子数组 暴力法很容易想到，就是枚举窗口的起始位置和终止位置： use std::cmp::min;  impl Solution &#123;     pub fn min_sub_array_len(target: i32, nums: Vec&lt;i32&gt;) -&gt; i32 &#123;         let mut ret = usize::MAX;
         </div>
       </a>
 
@@ -426,7 +515,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/note/Algorithm/Array/RemoveElement/" target="_self">
         <div>
-          27. 移除元素 首先是暴力法，也就是两层for，外层遇到target的时候就开启内层，将target之后的元素依次前移即可。唯一要注意的地方就是当数组整体前移1位的时候，i也需要前移1位。   本图取自于代码随想录，如有侵权立即删除  1234567891011121314151617impl Solution &#123;    pub fn remove_element(num
+          27. 移除元素 首先是暴力法，也就是两层for，外层遇到target的时候就开启内层，将target之后的元素依次前移即可。唯一要注意的地方就是当数组整体前移1位的时候，i也需要前移1位。   本图取自于代码随想录，如有侵权立即删除  impl Solution &#123;     pub fn remove_element(nums: &amp;mut Vec&lt;i32&g
         </div>
       </a>
 
@@ -487,7 +576,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/note/Algorithm/Array/BinarySearch/" target="_self">
         <div>
-          704. 二分查找 二分搜索最重要的是掌握现在是根据什么区间来写的。 一般情况下，二分搜索使用的区间有两种，第一种是\([left, right]\)，第二种是\([left, right)\)。这两种的区别就在于，right能否取到。一般来说，一个二分搜索的伪代码如下： 12345678910111213left = 0right = ??while left ?? right &#1
+          704. 二分查找 二分搜索最重要的是掌握现在是根据什么区间来写的。 一般情况下，二分搜索使用的区间有两种，第一种是\([left, right]\)，第二种是\([left, right)\)。这两种的区别就在于，right能否取到。一般来说，一个二分搜索的伪代码如下： left = 0 right = ?? while left ?? right &#123; 	mid = (rig
         </div>
       </a>
 

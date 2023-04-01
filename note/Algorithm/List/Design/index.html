@@ -16,22 +16,22 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="203. 移除链表元素 其实移除链表元素倒还好说，主要是rust写链表挺费劲的。。 impl Solution &amp;#123;     pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; &amp;#123;         &#x2F;">
+    <meta name="description" content="707. Design Linked List 这题主要是难在rust写个链表有点费劲。。 &#x2F;&#x2F; 通过结合Option可以定义一个良好的链表的数据结构。 struct MyLinkedList &amp;#123;     pub val: i32,     pub next: Option&lt;Box&lt;MyLinkedList&gt;&gt;, &amp;#125;  impl MyLinkedL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RemoveElement">
-<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/List/RemoveElement/index.html">
+<meta property="og:title" content="Design">
+<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/List/Design/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="203. 移除链表元素 其实移除链表元素倒还好说，主要是rust写链表挺费劲的。。 impl Solution &amp;#123;     pub fn remove_elements(head: Option&lt;Box&lt;ListNode&gt;&gt;, val: i32) -&gt; Option&lt;Box&lt;ListNode&gt;&gt; &amp;#123;         &#x2F;">
+<meta property="og:description" content="707. Design Linked List 这题主要是难在rust写个链表有点费劲。。 &#x2F;&#x2F; 通过结合Option可以定义一个良好的链表的数据结构。 struct MyLinkedList &amp;#123;     pub val: i32,     pub next: Option&lt;Box&lt;MyLinkedList&gt;&gt;, &amp;#125;  impl MyLinkedL">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-03-31T04:59:27.000Z">
-<meta property="article:modified_time" content="2023-04-01T12:28:40.804Z">
+<meta property="article:published_time" content="2023-04-01T10:18:08.000Z">
+<meta property="article:modified_time" content="2023-04-01T12:28:34.230Z">
 <meta property="article:author" content="Charlie">
 <meta property="article:tag" content="List">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>RemoveElement - Charlie&#39;s Blog</title>
+  <title>Design - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -173,7 +173,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="RemoveElement"></span>
+            <span id="subtitle" data-typed-text="Design"></span>
           
         </div>
 
@@ -184,8 +184,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-03-31 12:59" pubdate>
-          2023年3月31日 下午
+        <time datetime="2023-04-01 18:18" pubdate>
+          2023年4月1日 晚上
         </time>
       </span>
     
@@ -196,7 +196,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          762 字
+          2.1k 字
         
       </span>
     
@@ -207,7 +207,7 @@
         
         
         
-          7 分钟
+          18 分钟
         
       </span>
     
@@ -245,46 +245,128 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">RemoveElement</h1>
+            <h1 style="display: none">Design</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="移除链表元素"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/remove-linked-list-elements/">203.
-移除链表元素</a></h4>
-<p>其实移除链表元素倒还好说，主要是rust写链表挺费劲的。。</p>
-<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">remove_elements</span>(head: <span class="hljs-type">Option</span>&lt;<span class="hljs-type">Box</span>&lt;ListNode&gt;&gt;, val: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Option</span>&lt;<span class="hljs-type">Box</span>&lt;ListNode&gt;&gt; &#123;
-        <span class="hljs-comment">// 定义一个虚拟头节点，指向head</span>
-        <span class="hljs-comment">// 为了之后操作的一致性，不必单独处理head</span>
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">dummy</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(ListNode::<span class="hljs-title function_ invoke__">new</span>(-<span class="hljs-number">1</span>));
-        dummy.next = head;
-        <span class="hljs-comment">// 保留前一个结点</span>
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = dummy.<span class="hljs-title function_ invoke__">as_mut</span>();
-        <span class="hljs-comment">// Option.take会留下None，将Option之中的值取出来</span>
-        <span class="hljs-comment">// let mut x = Some(2);</span>
-		<span class="hljs-comment">// let y = x.take();</span>
-		<span class="hljs-comment">// assert_eq!(x, None);</span>
-		<span class="hljs-comment">// assert_eq!(y, Some(2));</span>
-        <span class="hljs-comment">// 如果还没有处理到尾节点</span>
-        <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(next) = cur.next.<span class="hljs-title function_ invoke__">take</span>() &#123;
-            <span class="hljs-comment">// 当前节点的value正好是我们要删除的</span>
-            <span class="hljs-keyword">if</span> next.val == val &#123;
-                <span class="hljs-comment">// 把前一个节点的next指针设置成当前节点的下一个节点</span>
-                <span class="hljs-comment">// cur --&gt; next --&gt; next.next</span>
-                <span class="hljs-comment">// cur --&gt; next.next</span>
-                cur.next = next.next
-                <span class="hljs-comment">// 如果不是的话，我们重新设置好cur.next的值（之前被take了）</span>
-                <span class="hljs-comment">// 并向后移动一个节点</span>
-            &#125; <span class="hljs-keyword">else</span> &#123;
-                cur.next = <span class="hljs-title function_ invoke__">Some</span>(next);
-                cur = cur.next.<span class="hljs-title function_ invoke__">as_mut</span>().<span class="hljs-title function_ invoke__">unwrap</span>()
-            &#125;
+                <h4 id="design-linked-list"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-linked-list/">707. Design
+Linked List</a></h4>
+<p>这题主要是难在rust写个链表有点费劲。。</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// 通过结合Option可以定义一个良好的链表的数据结构。</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">MyLinkedList</span> &#123;
+    <span class="hljs-keyword">pub</span> val: <span class="hljs-type">i32</span>,
+    <span class="hljs-keyword">pub</span> next: <span class="hljs-type">Option</span>&lt;<span class="hljs-type">Box</span>&lt;MyLinkedList&gt;&gt;,
+&#125;
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">MyLinkedList</span> &#123;
+    <span class="hljs-comment">// 定义一个dummy_head</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &#123;
+        MyLinkedList &#123;
+            val: -<span class="hljs-number">1</span>,
+            next: <span class="hljs-literal">None</span>,
         &#125;
-        <span class="hljs-comment">// 返回head节点</span>
-        dummy.next
     &#125;
-&#125;</code></pre></div>
+	<span class="hljs-comment">// 获取index对应的元素</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get</span>(&amp;<span class="hljs-keyword">self</span>, index: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;
+        <span class="hljs-built_in">assert!</span>(index &gt; -<span class="hljs-number">1</span>);
+        <span class="hljs-comment">// 记录当前是第几个</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-comment">// 设置cur为head（注意self是dummy_head）</span>
+        <span class="hljs-comment">// 这里要使用引用，因为不能将next的所有权转移给cur</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = &amp;<span class="hljs-keyword">self</span>.next;
+        <span class="hljs-comment">// 如果当前cur是Some类型的话</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(node) = cur &#123;
+            <span class="hljs-comment">// 如果正好到了需要获取的位置</span>
+            <span class="hljs-keyword">if</span> i == index &#123;
+                <span class="hljs-comment">// 返回值</span>
+                <span class="hljs-keyword">return</span> node.val;
+            &#125;
+            <span class="hljs-comment">// 否则移动到下一位</span>
+            i += <span class="hljs-number">1</span>;
+            cur = &amp;node.next;
+        &#125;
+        <span class="hljs-comment">// 如果while之中没返回，那么说明index超过了链表的size</span>
+        -<span class="hljs-number">1</span>
+    &#125;
+
+    <span class="hljs-comment">// 头插</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_at_head</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, val: <span class="hljs-type">i32</span>) &#123;
+        <span class="hljs-comment">// 首先定义新节点，next设置为self.next</span>
+        <span class="hljs-comment">// self.next也就是head，也就是说新节点指向了head</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">new_node</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MyLinkedList &#123;
+            val,
+            next: <span class="hljs-keyword">self</span>.next.<span class="hljs-title function_ invoke__">take</span>(),
+        &#125;);
+        <span class="hljs-comment">// 然后将dummy_head指向新节点</span>
+        <span class="hljs-keyword">self</span>.next = <span class="hljs-title function_ invoke__">Some</span>(new_node);
+    &#125;
+
+    <span class="hljs-comment">// 尾插</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_at_tail</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, val: <span class="hljs-type">i32</span>) &#123;
+        <span class="hljs-comment">// 定义新节点，因为尾插，所以next必定是None</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">new_node</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MyLinkedList &#123; val, next: <span class="hljs-literal">None</span> &#125;);
+        <span class="hljs-comment">// 定义一个迭代变量，初始值是head</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">last_node</span> = &amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>.next;
+        <span class="hljs-comment">// 如果是Some，那么向后移动</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(node) = last_node &#123;
+            last_node = &amp;<span class="hljs-keyword">mut</span> node.next;
+        &#125;
+        <span class="hljs-comment">// 可能会有人想到这里last_node就是none了，为什么还可以解引用赋值呢？</span>
+        <span class="hljs-comment">// 事实上，考虑58行的代码就能知道，last_node的本质是它前一个结点的next指针的引用</span>
+        <span class="hljs-comment">// 我们这里直接把next修改到指向ne_node就可以完成尾插</span>
+        *last_node = <span class="hljs-title function_ invoke__">Some</span>(new_node);
+    &#125;
+
+    <span class="hljs-comment">// 在固定位置插入元素</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">add_at_index</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, index: <span class="hljs-type">i32</span>, val: <span class="hljs-type">i32</span>) &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-comment">// 定义cur为dummy，方便之后的统一处理</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = <span class="hljs-keyword">self</span>;
+        <span class="hljs-comment">// 每次取出下一个元素的node</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(node) = cur.next.<span class="hljs-title function_ invoke__">take</span>() &#123;
+            <span class="hljs-comment">// 如果刚好是要找的位置</span>
+            <span class="hljs-keyword">if</span> i == index &#123;
+                <span class="hljs-comment">// 插入新节点，链接到node</span>
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">new_node</span> = <span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MyLinkedList &#123;
+                    val,
+                    next: <span class="hljs-title function_ invoke__">Some</span>(node),
+                &#125;);
+                <span class="hljs-comment">// 把node的前一个结点链接到新节点</span>
+                cur.next = <span class="hljs-title function_ invoke__">Some</span>(new_node);
+                <span class="hljs-keyword">return</span>;
+            &#125;
+            <span class="hljs-comment">// 如果不是对应的index，那么恢复next，开始下一轮循环</span>
+            i += <span class="hljs-number">1</span>;
+            cur.next = <span class="hljs-title function_ invoke__">Some</span>(node);
+            cur = cur.next.<span class="hljs-title function_ invoke__">as_mut</span>().<span class="hljs-title function_ invoke__">unwrap</span>()
+        &#125;
+        <span class="hljs-comment">// 处理当size == index的情况</span>
+        <span class="hljs-keyword">if</span> i == index &#123;
+            cur.next = <span class="hljs-title function_ invoke__">Some</span>(<span class="hljs-type">Box</span>::<span class="hljs-title function_ invoke__">new</span>(MyLinkedList &#123; val, next: <span class="hljs-literal">None</span> &#125;))
+        &#125;
+    &#125;
+
+    <span class="hljs-comment">// 在固定位置删除</span>
+    <span class="hljs-comment">// 和add_at_index类似</span>
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">delete_at_index</span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>, index: <span class="hljs-type">i32</span>) &#123;
+        <span class="hljs-built_in">assert!</span>(index &gt; -<span class="hljs-number">1</span>);
+        <span class="hljs-comment">// 定义迭代变量</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = <span class="hljs-keyword">self</span>;
+        <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(node) = cur.next.<span class="hljs-title function_ invoke__">take</span>() &#123;
+            <span class="hljs-keyword">if</span> i == index &#123;
+                cur.next = node.next;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            i += <span class="hljs-number">1</span>;
+            cur.next = <span class="hljs-title function_ invoke__">Some</span>(node);
+            <span class="hljs-comment">// Box有Deref的trait，可以看作是引用</span>
+            cur = cur.next.<span class="hljs-title function_ invoke__">as_mut</span>().<span class="hljs-title function_ invoke__">unwrap</span>()
+        &#125;
+    &#125;
+&#125;
+</code></pre></div>
 
                 
               </div>
@@ -330,8 +412,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>RemoveElement</div>
-      <div>https://charliezjj.github.io/note/Algorithm/List/RemoveElement/</div>
+      <div>Design</div>
+      <div>https://charliezjj.github.io/note/Algorithm/List/Design/</div>
     </div>
     <div class="license-meta">
       
@@ -343,7 +425,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年3月31日</div>
+          <div>2023年4月1日</div>
         </div>
       
       
@@ -375,18 +457,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/note/Algorithm/List/Design/" title="Design">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Design</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/note/Graphics/RealTimeRendering/rtr-chapter3/" title="rtr_Chapter3">
-                        <span class="hidden-mobile">rtr_Chapter3</span>
+                      <a href="/note/Algorithm/List/RemoveElement/" title="RemoveElement">
+                        <span class="hidden-mobile">RemoveElement</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

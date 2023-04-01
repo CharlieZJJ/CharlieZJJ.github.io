@@ -198,7 +198,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          2.4k 字
         
       </span>
     
@@ -209,7 +209,7 @@
         
         
         
-          23 分钟
+          21 分钟
         
       </span>
     
@@ -261,13 +261,133 @@ II</a></h4>
 </figure>
 <p>最重要的问题是四个边角的处理，到底哪一次循环来做这些任务？一个很重要的想法就是：保证每次循环做的任务类似！例如红色我们只处理开始点，不处理结束点，对于绿色、橙色和棕色都是这样。这就是循环不变式：<span class="math inline">\([start,
 end)\)</span>。注意到了这一点就不难了。</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">generate_matrix</span>(n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; &#123;<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = n <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; = <span class="hljs-built_in">vec!</span>[<span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>; n]; n];<br>        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> start_x, <span class="hljs-keyword">mut</span> start_y, <span class="hljs-keyword">mut</span> offset, <span class="hljs-keyword">mut</span> count) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1i32</span>);<br>        <span class="hljs-keyword">while</span> offset &lt;= n / <span class="hljs-number">2</span> &#123;<br>            <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> i, <span class="hljs-keyword">mut</span> j) = (start_x, start_y);<br>            <span class="hljs-keyword">while</span> j &lt; n - offset &#123;<br>                ret[i][j] = count;<br>                count += <span class="hljs-number">1</span>;<br>                j += <span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">while</span> i &lt; n - offset &#123;<br>                ret[i][j] = count;<br>                count += <span class="hljs-number">1</span>;<br>                i += <span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">while</span> j &gt; start_y &#123;<br>                ret[i][j] = count;<br>                count += <span class="hljs-number">1</span>;<br>                j -= <span class="hljs-number">1</span>;<br>            &#125;<br>            <span class="hljs-keyword">while</span> i &gt; start_x &#123;<br>                ret[i][j] = count;<br>                count += <span class="hljs-number">1</span>;<br>                i -= <span class="hljs-number">1</span>;<br>            &#125;<br>            start_x += <span class="hljs-number">1</span>;<br>            start_y += <span class="hljs-number">1</span>;<br>            offset += <span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">1</span> &#123;<br>            ret[n / <span class="hljs-number">2</span>][n / <span class="hljs-number">2</span>] = count;<br>        &#125;<br>        ret<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">generate_matrix</span>(n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = n <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; = <span class="hljs-built_in">vec!</span>[<span class="hljs-built_in">vec!</span>[<span class="hljs-number">0</span>; n]; n];
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> start_x, <span class="hljs-keyword">mut</span> start_y, <span class="hljs-keyword">mut</span> offset, <span class="hljs-keyword">mut</span> count) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1i32</span>);
+        <span class="hljs-keyword">while</span> offset &lt;= n / <span class="hljs-number">2</span> &#123;
+            <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> i, <span class="hljs-keyword">mut</span> j) = (start_x, start_y);
+            <span class="hljs-keyword">while</span> j &lt; n - offset &#123;
+                ret[i][j] = count;
+                count += <span class="hljs-number">1</span>;
+                j += <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">while</span> i &lt; n - offset &#123;
+                ret[i][j] = count;
+                count += <span class="hljs-number">1</span>;
+                i += <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">while</span> j &gt; start_y &#123;
+                ret[i][j] = count;
+                count += <span class="hljs-number">1</span>;
+                j -= <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">while</span> i &gt; start_x &#123;
+                ret[i][j] = count;
+                count += <span class="hljs-number">1</span>;
+                i -= <span class="hljs-number">1</span>;
+            &#125;
+            start_x += <span class="hljs-number">1</span>;
+            start_y += <span class="hljs-number">1</span>;
+            offset += <span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">1</span> &#123;
+            ret[n / <span class="hljs-number">2</span>][n / <span class="hljs-number">2</span>] = count;
+        &#125;
+        ret
+    &#125;
+&#125;</code></pre></div>
 <h4 id="螺旋矩阵"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/spiral-matrix/">54. 螺旋矩阵</a></h4>
 <h4 id="剑指-offer-29.-顺时针打印矩阵"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/">剑指
 Offer 29. 顺时针打印矩阵</a></h4>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">spiral_order</span>(matrix: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>        <span class="hljs-keyword">let</span> (m, n) = (matrix.<span class="hljs-title function_ invoke__">len</span>(), matrix[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">len</span>());<br>        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> top, <span class="hljs-keyword">mut</span> bottom, <span class="hljs-keyword">mut</span> left, <span class="hljs-keyword">mut</span> right) =<br>            (<span class="hljs-number">0i32</span>, (m - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>, <span class="hljs-number">0i32</span>, (n - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];<br>        <span class="hljs-keyword">let</span> <span class="hljs-variable">max</span> = m * n;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">remain</span> = max;<br>        <span class="hljs-keyword">while</span> remain &gt; <span class="hljs-number">0</span> &#123;<br>            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">j</span> = left;<br>            <span class="hljs-keyword">while</span> j &lt;= right &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;<br>                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[top <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][j <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);<br>                j += <span class="hljs-number">1</span>;<br>                remain -= <span class="hljs-number">1</span>;<br>            &#125;<br><br>            top += <span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = top;<br>            <span class="hljs-keyword">while</span> i &lt;= bottom &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;<br>                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][right <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);<br>                i += <span class="hljs-number">1</span>;<br>                remain -= <span class="hljs-number">1</span>;<br>            &#125;<br><br>            right -= <span class="hljs-number">1</span>;<br>            j = right;<br>            <span class="hljs-keyword">while</span> j &gt;= left &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;<br>                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[bottom <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][j <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);<br>                j -= <span class="hljs-number">1</span>;<br>                remain -= <span class="hljs-number">1</span>;<br>            &#125;<br><br>            bottom -= <span class="hljs-number">1</span>;<br>            i = bottom;<br>            <span class="hljs-keyword">while</span> i &gt;= top &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;<br>                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][left <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);<br>                i -= <span class="hljs-number">1</span>;<br>                remain -= <span class="hljs-number">1</span>;<br>            &#125;<br>            left += <span class="hljs-number">1</span>;<br>        &#125;<br>        ret<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">spiral_order</span>(matrix: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;
+        <span class="hljs-keyword">let</span> (m, n) = (matrix.<span class="hljs-title function_ invoke__">len</span>(), matrix[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">len</span>());
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> top, <span class="hljs-keyword">mut</span> bottom, <span class="hljs-keyword">mut</span> left, <span class="hljs-keyword">mut</span> right) =
+            (<span class="hljs-number">0i32</span>, (m - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>, <span class="hljs-number">0i32</span>, (n - <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">max</span> = m * n;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">remain</span> = max;
+        <span class="hljs-keyword">while</span> remain &gt; <span class="hljs-number">0</span> &#123;
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">j</span> = left;
+            <span class="hljs-keyword">while</span> j &lt;= right &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[top <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][j <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);
+                j += <span class="hljs-number">1</span>;
+                remain -= <span class="hljs-number">1</span>;
+            &#125;
+
+            top += <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = top;
+            <span class="hljs-keyword">while</span> i &lt;= bottom &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][right <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);
+                i += <span class="hljs-number">1</span>;
+                remain -= <span class="hljs-number">1</span>;
+            &#125;
+
+            right -= <span class="hljs-number">1</span>;
+            j = right;
+            <span class="hljs-keyword">while</span> j &gt;= left &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[bottom <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][j <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);
+                j -= <span class="hljs-number">1</span>;
+                remain -= <span class="hljs-number">1</span>;
+            &#125;
+
+            bottom -= <span class="hljs-number">1</span>;
+            i = bottom;
+            <span class="hljs-keyword">while</span> i &gt;= top &amp;&amp; remain &gt; <span class="hljs-number">0</span> &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>(matrix[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>][left <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>]);
+                i -= <span class="hljs-number">1</span>;
+                remain -= <span class="hljs-number">1</span>;
+            &#125;
+            left += <span class="hljs-number">1</span>;
+        &#125;
+        ret
+    &#125;
+&#125;</code></pre></div>
 <p>发现了一个比我优雅的多的写法！！！</p>
-<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;<br>    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">spiral_order</span>(matrix: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;<br>        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> top, <span class="hljs-keyword">mut</span> left) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> bottom, <span class="hljs-keyword">mut</span> right) = (matrix.<span class="hljs-title function_ invoke__">len</span>(), matrix[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">len</span>());<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">result</span> = <span class="hljs-built_in">vec!</span>[];<br><br>        <span class="hljs-comment">// counter clockwise direction</span><br>        <span class="hljs-comment">// 0 -&gt; right, 1 -&gt; down, 2 -&gt; left, 3 -&gt; up</span><br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">dir</span> = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><br>        <span class="hljs-keyword">while</span> top &lt; bottom &amp;&amp; left &lt; right &#123;<br>            <span class="hljs-keyword">let</span> (x, y) = cur;<br>            <span class="hljs-keyword">match</span> dir &#123;<br>                <span class="hljs-number">0</span> =&gt; &#123;<br>                    result.<span class="hljs-title function_ invoke__">extend</span>((left..right).<span class="hljs-title function_ invoke__">map</span>(|y| matrix[x][y]));<br>                    top += <span class="hljs-number">1</span>;<br>                    cur = (x, right - <span class="hljs-number">1</span>);<br>                &#125;<br>                <span class="hljs-number">1</span> =&gt; &#123;<br>                    result.<span class="hljs-title function_ invoke__">extend</span>((top..bottom).<span class="hljs-title function_ invoke__">map</span>(|x| matrix[x][y]));<br>                    right -= <span class="hljs-number">1</span>;<br>                    cur = (bottom - <span class="hljs-number">1</span>, y);<br>                &#125;<br>                <span class="hljs-number">2</span> =&gt; &#123;<br>                    result.<span class="hljs-title function_ invoke__">extend</span>((left..right).<span class="hljs-title function_ invoke__">rev</span>().<span class="hljs-title function_ invoke__">map</span>(|y| matrix[x][y]));<br>                    bottom -= <span class="hljs-number">1</span>;<br>                    cur = (x, left);<br>                &#125;<br>                <span class="hljs-number">3</span> =&gt; &#123;<br>                    result.<span class="hljs-title function_ invoke__">extend</span>((top..bottom).<span class="hljs-title function_ invoke__">rev</span>().<span class="hljs-title function_ invoke__">map</span>(|x| matrix[x][y]));<br>                    left += <span class="hljs-number">1</span>;<br>                    cur = (top, y);<br>                &#125;<br>                _ =&gt; <span class="hljs-built_in">unreachable!</span>(),<br>            &#125;<br><br>            dir = (dir + <span class="hljs-number">1</span>) % <span class="hljs-number">4</span>;<br>        &#125;<br>        result<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">spiral_order</span>(matrix: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> top, <span class="hljs-keyword">mut</span> left) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> bottom, <span class="hljs-keyword">mut</span> right) = (matrix.<span class="hljs-title function_ invoke__">len</span>(), matrix[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">len</span>());
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">result</span> = <span class="hljs-built_in">vec!</span>[];
+
+        <span class="hljs-comment">// counter clockwise direction</span>
+        <span class="hljs-comment">// 0 -&gt; right, 1 -&gt; down, 2 -&gt; left, 3 -&gt; up</span>
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">dir</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cur</span> = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+
+        <span class="hljs-keyword">while</span> top &lt; bottom &amp;&amp; left &lt; right &#123;
+            <span class="hljs-keyword">let</span> (x, y) = cur;
+            <span class="hljs-keyword">match</span> dir &#123;
+                <span class="hljs-number">0</span> =&gt; &#123;
+                    result.<span class="hljs-title function_ invoke__">extend</span>((left..right).<span class="hljs-title function_ invoke__">map</span>(|y| matrix[x][y]));
+                    top += <span class="hljs-number">1</span>;
+                    cur = (x, right - <span class="hljs-number">1</span>);
+                &#125;
+                <span class="hljs-number">1</span> =&gt; &#123;
+                    result.<span class="hljs-title function_ invoke__">extend</span>((top..bottom).<span class="hljs-title function_ invoke__">map</span>(|x| matrix[x][y]));
+                    right -= <span class="hljs-number">1</span>;
+                    cur = (bottom - <span class="hljs-number">1</span>, y);
+                &#125;
+                <span class="hljs-number">2</span> =&gt; &#123;
+                    result.<span class="hljs-title function_ invoke__">extend</span>((left..right).<span class="hljs-title function_ invoke__">rev</span>().<span class="hljs-title function_ invoke__">map</span>(|y| matrix[x][y]));
+                    bottom -= <span class="hljs-number">1</span>;
+                    cur = (x, left);
+                &#125;
+                <span class="hljs-number">3</span> =&gt; &#123;
+                    result.<span class="hljs-title function_ invoke__">extend</span>((top..bottom).<span class="hljs-title function_ invoke__">rev</span>().<span class="hljs-title function_ invoke__">map</span>(|x| matrix[x][y]));
+                    left += <span class="hljs-number">1</span>;
+                    cur = (top, y);
+                &#125;
+                _ =&gt; <span class="hljs-built_in">unreachable!</span>(),
+            &#125;
+
+            dir = (dir + <span class="hljs-number">1</span>) % <span class="hljs-number">4</span>;
+        &#125;
+        result
+    &#125;
+&#125;</code></pre></div>
 
                 
               </div>
