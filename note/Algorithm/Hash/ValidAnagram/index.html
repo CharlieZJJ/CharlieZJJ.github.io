@@ -16,29 +16,22 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="因为这两道题没有rust的提交通道，因此选择使用c++，而且较为简单，因此直接放在一起了。 面试题 02.07. 链表相交 &#x2F;**  * Definition for singly-linked list.  * struct ListNode &amp;#123;  *     int val;  *     ListNode *next;  *     ListNode(int x) : val">
+    <meta name="description" content="242. 有效的字母异位词 这道题就是使用哈希的思想，遍历一次s之后再遍历一次t，看了代码就懂了：  感觉这次的代码很rustful  impl Solution &amp;#123;     pub fn is_anagram(s: String, t: String) -&gt; bool &amp;#123;         let mut fre &#x3D; [0; 26];         s.as">
 <meta property="og:type" content="article">
-<meta property="og:title" content="链表相交和环形链表">
-<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/index.html">
+<meta property="og:title" content="有效的字母异位词">
+<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/Hash/ValidAnagram/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="因为这两道题没有rust的提交通道，因此选择使用c++，而且较为简单，因此直接放在一起了。 面试题 02.07. 链表相交 &#x2F;**  * Definition for singly-linked list.  * struct ListNode &amp;#123;  *     int val;  *     ListNode *next;  *     ListNode(int x) : val">
+<meta property="og:description" content="242. 有效的字母异位词 这道题就是使用哈希的思想，遍历一次s之后再遍历一次t，看了代码就懂了：  感觉这次的代码很rustful  impl Solution &amp;#123;     pub fn is_anagram(s: String, t: String) -&gt; bool &amp;#123;         let mut fre &#x3D; [0; 26];         s.as">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/image-20230403165509427.png">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/141.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.gif">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/20220925103433.png">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/142.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%88%E6%B1%82%E5%85%A5%E5%8F%A3%EF%BC%89.gif">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/2021031816503266.png">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/2021031816515727.png">
-<meta property="article:published_time" content="2023-04-03T08:33:31.000Z">
-<meta property="article:modified_time" content="2023-04-03T10:03:09.546Z">
+<meta property="article:published_time" content="2023-04-04T12:03:30.000Z">
+<meta property="article:modified_time" content="2023-04-04T13:04:06.182Z">
 <meta property="article:author" content="Charlie">
-<meta property="article:tag" content="List">
+<meta property="article:tag" content="Hash">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/image-20230403165509427.png">
   
   
   
-  <title>链表相交和环形链表 - Charlie&#39;s Blog</title>
+  <title>有效的字母异位词 - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -180,7 +173,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="链表相交和环形链表"></span>
+            <span id="subtitle" data-typed-text="有效的字母异位词"></span>
           
         </div>
 
@@ -191,8 +184,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-03 16:33" pubdate>
-          2023年4月3日 下午
+        <time datetime="2023-04-04 20:03" pubdate>
+          2023年4月4日 晚上
         </time>
       </span>
     
@@ -203,7 +196,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          2k 字
         
       </span>
     
@@ -214,7 +207,7 @@
         
         
         
-          21 分钟
+          17 分钟
         
       </span>
     
@@ -252,153 +245,104 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">链表相交和环形链表</h1>
+            <h1 style="display: none">有效的字母异位词</h1>
             
             
               <div class="markdown-body">
                 
-                <p>因为这两道题没有rust的提交通道，因此选择使用c++，而且较为简单，因此直接放在一起了。</p>
-<h4 id="面试题-02.07.-链表相交"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/intersection-of-two-linked-lists-lcci/">面试题
-02.07. 链表相交</a></h4>
-<div class="code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * Definition for singly-linked list.</span>
-<span class="hljs-comment"> * struct ListNode &#123;</span>
-<span class="hljs-comment"> *     int val;</span>
-<span class="hljs-comment"> *     ListNode *next;</span>
-<span class="hljs-comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span>
-<span class="hljs-comment"> * &#125;;</span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function">ListNode *<span class="hljs-title">getIntersectionNode</span><span class="hljs-params">(ListNode *headA, ListNode *headB)</span> </span>&#123;
-        <span class="hljs-keyword">auto</span> curA = headA;
-        <span class="hljs-keyword">auto</span> curB = headB;
-        <span class="hljs-type">int</span> lenA = <span class="hljs-number">0</span>, lenB = <span class="hljs-number">0</span>;
-        <span class="hljs-comment">// 找到A的长度</span>
-        <span class="hljs-keyword">while</span> (curA) &#123;
-            curA = curA-&gt;next;
-            lenA++;
-        &#125;
-        <span class="hljs-comment">// 找到B的长度</span>
-        <span class="hljs-keyword">while</span> (curB) &#123;
-            curB = curB-&gt;next;
-            lenB++;
-        &#125;
-        <span class="hljs-comment">// 重置AB</span>
-        curA = headA;
-        curB = headB;
-        <span class="hljs-comment">// 让A始终代表较长的哪一个</span>
-        <span class="hljs-keyword">if</span> (lenB &gt; lenA) &#123;
-            <span class="hljs-built_in">swap</span>(lenA, lenB);
-            <span class="hljs-built_in">swap</span>(curA, curB);
-        &#125;
-        <span class="hljs-comment">// 获取插值</span>
-        <span class="hljs-type">int</span> gap = lenA - lenB;
-        <span class="hljs-comment">// 移动A直到curA代表的链表和curB一样长</span>
-        <span class="hljs-comment">// 因为他们共享一段链表，因此从长度一样开始可以减少操作</span>
-        <span class="hljs-keyword">while</span> (gap) &#123;
-            curA = curA-&gt;next;
-            gap--;
-        &#125;
-        <span class="hljs-keyword">while</span> (curA &amp;&amp; curB) &#123;
-            <span class="hljs-keyword">if</span> (curA == curB) &#123;
-                <span class="hljs-keyword">return</span> curA;
-            &#125;
-            curA = curA-&gt;next;
-            curB = curB-&gt;next;
-        &#125;
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+                <h4 id="有效的字母异位词"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-anagram/">242.
+有效的字母异位词</a></h4>
+<p>这道题就是使用哈希的思想，遍历一次s之后再遍历一次t，看了代码就懂了：</p>
+<blockquote>
+<p>感觉这次的代码很rustful</p>
+</blockquote>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">is_anagram</span>(s: <span class="hljs-type">String</span>, t: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">fre</span> = [<span class="hljs-number">0</span>; <span class="hljs-number">26</span>];
+        s.<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+            fre[(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+        &#125;);
+        t.<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+            fre[(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] -= <span class="hljs-number">1</span>;
+        &#125;);
+        fre.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">all</span>(|i| *i == <span class="hljs-number">0</span>)
     &#125;
-&#125;;</code></pre></div>
-<h4 id="环形链表-ii"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/linked-list-cycle-ii/">142. 环形链表
-II</a></h4>
-<p>这道题有点难度的。主要是要理解快慢指针的使用。</p>
-<p>首先fast每次移动两个节点，慢指针一次移动一个节点，那么这两个节点只要相遇，一定是出现在了环之中。而且环一定出现在链表的最尾部：</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/image-20230403165509427.png" srcset="/img/loading.gif" lazyload alt="image-20230403165509427">
-<figcaption aria-hidden="true">image-20230403165509427</figcaption>
-</figure>
-<p>因为一个节点只能有一个next指针。</p>
-<p>所以现在可以确定，如果无环，那么fast会以2倍的速度移动，一定会在slow之前到达null节点，也就结束了</p>
-<p>如果有环，那么他们一定会在环里面相遇。这样想：假设在slow到达环的入口之后停止移动，fast以每次移动一个节点的速度绕环移动，那么一定会遇到slow（可以认为是相对运动）。因此只需要我们不断的移动fast和slow，他们就一定会相遇。</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/141.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.gif" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
-<p>那么现在剩下的问题就变成了如何找到入口。下面是一些定义：</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/20220925103433.png" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
-<p>那么我们可以得到相遇时，slow指针走了： <span class="math display">\[
-x + y
-\]</span> 而fast指针走了： <span class="math display">\[
-x + y + n \cdot (y + z), n \ge 1
-\]</span>
-这里n至少为1，因为很显然，快指针必然要比慢指针多走至少一圈才能“赶上”慢指针。</p>
-<p>而fast的速度为2，slow为1，那么有以下成立： <span class="math display">\[
-\begin{align*}
-2(x + y) &amp;=x + y + n \cdot (y + z) \\
-x + y &amp;= n \cdot (y + z) \\
-\end{align*}
-\]</span> 而x就是入口处距head的距离，因此： <span class="math display">\[
-x = (n - 1) \cdot (y + z) + z
-\]</span> 现在考虑<span class="math inline">\(n=1\)</span>的情况，这种情况下有： <span class="math display">\[
-\begin{align*}
-x &amp;= (n - 1) \cdot (y + z) + z \\
-x &amp;= z
-\end{align*}
-\]</span>
-这个等式就是告诉我们：定义两个指针，一个起点是head，一个起点是交点，他们一起往后走，当他们相等的时候就是环的入口。</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/142.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8II%EF%BC%88%E6%B1%82%E5%85%A5%E5%8F%A3%EF%BC%89.gif" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
-<p>那么如果说<span class="math inline">\(n \neq
-1\)</span>呢？这种情况其实就是快指针绕着环多走了n-1圈，然后还是会和index2在入口处相遇。</p>
-<p>那么还有个问题需要我们解决：在一开始表示slow走过的节点数的时候，把它定义成了x
-+ y，那么为什么不是x + y + 某个数量的整圈呢？</p>
-<p>假如说，fast和slow在某个时刻都在环的入口：</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/2021031816503266.png" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
-<p>可以发现他们一定会在第三圈重新相遇。那么，在slow进环的时候，fast必然在环的任意一个位置，如图：</p>
-<figure>
-<img src="/note/Algorithm/List/IntersectAndCircle/2021031816515727.png" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
-<p>可以看出fast走到3的时候，走过了k+n个节点，而slow走了其中的一半，因为<span class="math inline">\(k &lt; n\)</span>，所以<span class="math inline">\(\frac{k+n}{2} \lt
-n\)</span>，也就是说此时slow必定会在入口3之前和fast相遇。</p>
-<div class="code-wrapper"><pre><code class="hljs c++"><span class="hljs-comment">/**</span>
-<span class="hljs-comment"> * Definition for singly-linked list.</span>
-<span class="hljs-comment"> * struct ListNode &#123;</span>
-<span class="hljs-comment"> *     int val;</span>
-<span class="hljs-comment"> *     ListNode *next;</span>
-<span class="hljs-comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span>
-<span class="hljs-comment"> * &#125;;</span>
-<span class="hljs-comment"> */</span>
-<span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;
-<span class="hljs-keyword">public</span>:
-    <span class="hljs-function">ListNode *<span class="hljs-title">detectCycle</span><span class="hljs-params">(ListNode *head)</span> </span>&#123;
-        <span class="hljs-keyword">auto</span> fast = head;
-        <span class="hljs-keyword">auto</span> slow = head;
-        <span class="hljs-keyword">while</span> (fast != <span class="hljs-literal">nullptr</span> &amp;&amp; fast-&gt;next != <span class="hljs-literal">nullptr</span>) &#123;
-            fast = fast-&gt;next-&gt;next;
-            slow = slow-&gt;next;
-            <span class="hljs-keyword">if</span> (slow == fast) &#123;
-                <span class="hljs-keyword">auto</span> index1 = fast;
-                <span class="hljs-keyword">auto</span> index2 = head;
-                <span class="hljs-keyword">while</span> (index1 != index2) &#123;
-                    index1 = index1-&gt;next;
-                    index2 = index2-&gt;next;
-                &#125;
-                <span class="hljs-keyword">return</span> index1;
+&#125;</code></pre></div>
+<h4 id="赎金信"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ransom-note/">383.
+赎金信</a></h4>
+<p>这题和上面的基本上一模一样</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">can_construct</span>(ransom_note: <span class="hljs-type">String</span>, magazine: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">fre</span> = [<span class="hljs-number">0</span>; <span class="hljs-number">26</span>];
+        magazine.<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+            fre[(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+        &#125;);
+        ransom_note.<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+            fre[(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] -= <span class="hljs-number">1</span>;
+        &#125;);
+        fre.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">all</span>(|i| *i &gt;= <span class="hljs-number">0</span>)
+    &#125;
+&#125;</code></pre></div>
+<h4 id="字母异位词分组"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/group-anagrams/">49.
+字母异位词分组</a></h4>
+<p>和之前的还是类似的思路，先统计频率，然后按照频率分组</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">group_anagrams</span>(strs: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">String</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">String</span>&gt;&gt; &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = strs.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">fres</span> = <span class="hljs-built_in">vec!</span>[[<span class="hljs-number">0</span>; <span class="hljs-number">26</span>]; len];
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..len &#123;
+            strs[i].<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+                fres[i][(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+            &#125;);
+        &#125;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">map</span>: HashMap&lt;&amp;[<span class="hljs-type">i32</span>; <span class="hljs-number">26</span>], <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">String</span>&gt;&gt; = HashMap::<span class="hljs-title function_ invoke__">new</span>();
+        fres.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>().<span class="hljs-title function_ invoke__">for_each</span>(|(pos, val)| &#123;
+            <span class="hljs-keyword">if</span> map.<span class="hljs-title function_ invoke__">contains_key</span>(val) &#123;
+                map.<span class="hljs-title function_ invoke__">get_mut</span>(val).<span class="hljs-title function_ invoke__">unwrap</span>().<span class="hljs-title function_ invoke__">push</span>(strs[pos].<span class="hljs-title function_ invoke__">clone</span>());
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                map.<span class="hljs-title function_ invoke__">insert</span>(val, <span class="hljs-built_in">vec!</span>[strs[pos].<span class="hljs-title function_ invoke__">clone</span>()]);
+            &#125;
+        &#125;);
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];
+        map.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|(pos, val)| &#123;
+            ret.<span class="hljs-title function_ invoke__">push</span>(val);
+        &#125;);
+        ret
+    &#125;
+&#125;</code></pre></div>
+<h4 id="找到字符串中所有字母异位词"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/">438.
+找到字符串中所有字母异位词</a></h4>
+<p>这道题很有意思，因为他实际上结合了滑动窗口！！！</p>
+<p>所以当你看到有类似的窗口扫描的问题，一定要考虑这个办法。我一开始没考虑，运行220ms，考虑之后个位数了。</p>
+<p>所以之前的也不能忘！！！</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">find_anagrams</span>(s: <span class="hljs-type">String</span>, p: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">p_len</span> = p.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">s_len</span> = s.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">if</span> s_len &lt; p_len &#123;
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">vec!</span>[];
+        &#125;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">p_fre</span> = [<span class="hljs-number">0</span>; <span class="hljs-number">26</span>];
+        p.<span class="hljs-title function_ invoke__">as_bytes</span>().<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|c| &#123;
+            p_fre[(*c - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+        &#125;);
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">s_fre</span> = [<span class="hljs-number">0</span>; <span class="hljs-number">26</span>];
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">by</span> = s.<span class="hljs-title function_ invoke__">as_bytes</span>();
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..s_len &#123;
+            <span class="hljs-keyword">if</span> i &lt; p_len &#123;
+                s_fre[(by[i] - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+            &#125;<span class="hljs-keyword">else</span> &#123;
+                s_fre[(by[i] - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>;
+                s_fre[(by[i - p.<span class="hljs-title function_ invoke__">len</span>()] - <span class="hljs-string">b&#x27;a&#x27;</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] -= <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">if</span> s_fre == p_fre &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>((i - p.<span class="hljs-title function_ invoke__">len</span>() + <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
             &#125;
         &#125;
-        <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+        ret
     &#125;
-&#125;;</code></pre></div>
+&#125;</code></pre></div>
 
                 
               </div>
@@ -432,7 +376,7 @@ n\)</span>，也就是说此时slow必定会在入口3之前和fast相遇。</p>
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/List/">#List</a>
+        <a href="/tags/Hash/">#Hash</a>
       
     </div>
   
@@ -444,8 +388,8 @@ n\)</span>，也就是说此时slow必定会在入口3之前和fast相遇。</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>链表相交和环形链表</div>
-      <div>https://charliezjj.github.io/note/Algorithm/List/IntersectAndCircle/</div>
+      <div>有效的字母异位词</div>
+      <div>https://charliezjj.github.io/note/Algorithm/Hash/ValidAnagram/</div>
     </div>
     <div class="license-meta">
       
@@ -457,7 +401,7 @@ n\)</span>，也就是说此时slow必定会在入口3之前和fast相遇。</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月3日</div>
+          <div>2023年4月4日</div>
         </div>
       
       
@@ -489,18 +433,12 @@ n\)</span>，也就是说此时slow必定会在入口3之前和fast相遇。</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/note/Algorithm/Hash/ValidAnagram/" title="有效的字母异位词">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">有效的字母异位词</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/note/Algorithm/List/RemoveNthNodeFromEndofList/" title="删除链表的第n个节点">
-                        <span class="hidden-mobile">删除链表的第n个节点</span>
+                      <a href="/note/Algorithm/List/IntersectAndCircle/" title="链表相交和环形链表">
+                        <span class="hidden-mobile">链表相交和环形链表</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
