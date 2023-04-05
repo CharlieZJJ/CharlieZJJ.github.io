@@ -16,22 +16,24 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="202. 快乐数 挺简单的，主要是如果可以无限循环的话，就代表会出现重复数字，也就是说出现重复数字就不是快乐数。 impl Solution &amp;#123;     pub fn is_happy(mut n: i32) -&gt; bool &amp;#123;         use std::collections::HashSet;         let mut set &#x3D; HashSet::">
+    <meta name="description" content="1. 两数之和 用map来解决很简单，一看到某个东西是不是在集合里出现过，就要想到hash impl Solution &amp;#123;     pub fn two_sum(nums: Vec&lt;i32&gt;, target: i32) -&gt; Vec&lt;i32&gt; &amp;#123;         use std::collections::HashMap;         u">
 <meta property="og:type" content="article">
-<meta property="og:title" content="快乐数">
-<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/Hash/HappyNumber/index.html">
+<meta property="og:title" content="两数之和">
+<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/Hash/TwoSum/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="202. 快乐数 挺简单的，主要是如果可以无限循环的话，就代表会出现重复数字，也就是说出现重复数字就不是快乐数。 impl Solution &amp;#123;     pub fn is_happy(mut n: i32) -&gt; bool &amp;#123;         use std::collections::HashSet;         let mut set &#x3D; HashSet::">
+<meta property="og:description" content="1. 两数之和 用map来解决很简单，一看到某个东西是不是在集合里出现过，就要想到hash impl Solution &amp;#123;     pub fn two_sum(nums: Vec&lt;i32&gt;, target: i32) -&gt; Vec&lt;i32&gt; &amp;#123;         use std::collections::HashMap;         u">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-05T02:41:07.000Z">
-<meta property="article:modified_time" content="2023-04-05T02:51:21.968Z">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/Hash/TwoSum/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.gif">
+<meta property="article:published_time" content="2023-04-05T03:06:09.000Z">
+<meta property="article:modified_time" content="2023-04-05T07:47:53.710Z">
 <meta property="article:author" content="Charlie">
 <meta property="article:tag" content="Hash">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://charliezjj.github.io/note/Algorithm/Hash/TwoSum/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.gif">
   
   
   
-  <title>快乐数 - Charlie&#39;s Blog</title>
+  <title>两数之和 - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -173,7 +175,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="快乐数"></span>
+            <span id="subtitle" data-typed-text="两数之和"></span>
           
         </div>
 
@@ -184,7 +186,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-05 10:41" pubdate>
+        <time datetime="2023-04-05 11:06" pubdate>
           2023年4月5日 上午
         </time>
       </span>
@@ -196,7 +198,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          421 字
+          3.2k 字
         
       </span>
     
@@ -207,7 +209,7 @@
         
         
         
-          4 分钟
+          27 分钟
         
       </span>
     
@@ -245,39 +247,171 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">快乐数</h1>
+            <h1 style="display: none">两数之和</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="快乐数"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/happy-number/">202. 快乐数</a></h4>
-<p>挺简单的，主要是如果可以无限循环的话，就代表会出现重复数字，也就是说出现重复数字就不是快乐数。</p>
+                <h4 id="两数之和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/two-sum/">1.
+两数之和</a></h4>
+<p>用map来解决很简单，一看到某个东西是不是在集合里出现过，就要想到hash</p>
 <div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-keyword">mut</span> n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;
-        <span class="hljs-keyword">use</span> std::collections::HashSet;
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">set</span> = HashSet::<span class="hljs-title function_ invoke__">new</span>();
-        set.<span class="hljs-title function_ invoke__">insert</span>(n);
-        <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span> &#123;
-            <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">two_sum</span>(nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, target: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;
+        <span class="hljs-keyword">use</span> std::collections::HashMap;
+        <span class="hljs-keyword">use</span> std::iter::FromIterator;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">map</span>: HashMap&lt;&amp;<span class="hljs-type">i32</span>, <span class="hljs-type">usize</span>&gt; =
+            HashMap::<span class="hljs-title function_ invoke__">from_iter</span>(nums.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>().<span class="hljs-title function_ invoke__">map</span>(|(index, val)| (val, index)));
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];
+        <span class="hljs-title function_ invoke__">for</span> (index, val) <span class="hljs-keyword">in</span> nums.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>() &#123;
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">gap</span> = target - *val;
+            <span class="hljs-keyword">if</span> map.<span class="hljs-title function_ invoke__">contains_key</span>(&amp;gap) &amp;&amp; map[&amp;gap] != index &#123;
+                ret.<span class="hljs-title function_ invoke__">push</span>(index <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
+                ret.<span class="hljs-title function_ invoke__">push</span>(map[&amp;gap] <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>);
                 <span class="hljs-keyword">break</span>;
             &#125;
-            n = <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">sum</span>(n);
-            <span class="hljs-keyword">if</span> set.<span class="hljs-title function_ invoke__">contains</span>(&amp;n) &#123;
-                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
-            &#125;
-            set.<span class="hljs-title function_ invoke__">insert</span>(n);
         &#125;
-        <span class="hljs-literal">true</span>
+        ret
     &#125;
+&#125;</code></pre></div>
+<h4 id="四数相加-ii"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum-ii/">454. 四数相加 II</a></h4>
+<p>这道题就是两组两组加在一起，然后通过map搜索即可。</p>
+<p>这样可以把暴力法的<span class="math inline">\(O(n^4)\)</span>降低到<span class="math inline">\(O(n^2)\)</span>。</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">four_sum_count</span>(
+        nums1: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;,
+        nums2: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;,
+        nums3: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;,
+        nums4: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;,
+    ) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;
+        <span class="hljs-keyword">use</span> std::collections::HashMap;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">cd_map</span> = HashMap::<span class="hljs-title function_ invoke__">new</span>();
+        nums3.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|val3| &#123;
+            nums4.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|val4| &#123;
+                cd_map
+                    .<span class="hljs-title function_ invoke__">entry</span>(-val3 - val4)
+                    .<span class="hljs-title function_ invoke__">and_modify</span>(|val| *val += <span class="hljs-number">1</span>)
+                    .<span class="hljs-title function_ invoke__">or_insert</span>(<span class="hljs-number">1</span>);
+            &#125;)
+        &#125;);
 
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">sum</span>(<span class="hljs-keyword">mut</span> n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span> = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span> &#123;
-            <span class="hljs-keyword">let</span> <span class="hljs-variable">val</span> = n % <span class="hljs-number">10</span>;
-            sum += val * val;
-            n /= <span class="hljs-number">10</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-number">0</span>;
+        nums1.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|val1| &#123;
+            nums2.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|val2| &#123;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">sum</span> = val1 + val2;
+                <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(&amp;val) = cd_map.<span class="hljs-title function_ invoke__">get</span>(&amp;sum) &#123;
+                    ret += val;
+                &#125;
+            &#125;)
+        &#125;);
+        ret
+    &#125;
+&#125;</code></pre></div>
+<h4 id="三数之和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">15.
+三数之和</a></h4>
+<p>这道题用has法也可以解，但是有点慢，用HashSet的速度大概是下面双指针法的5倍。</p>
+<p>下面的双指针法首先需要对数组进行排序，然后在固定i的情况下，定义一个left和一个right指针，然后我想就不用我说了：</p>
+<figure>
+<img src="/note/Algorithm/Hash/TwoSum/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.gif" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
+<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
+</figure>
+<p>主要问题是不用HashSet，需要我们手动去重，那么首先是i这边的去重，有两种：</p>
+<ul>
+<li>nums[i] == nums[i +
+1]，这种情况会直接把三元组之中重复元素去掉！！，例如{-1, -1,
+2}，这样就无法识别到这个三元组，因为已经去了！</li>
+<li>nums[i] == nums[i -
+1]，这样才是正确的写法，只要前面没有记录过i，那么此时就可继续操作</li>
+</ul>
+<p>然后是left和right的去重：</p>
+<p>可以在right或者left更改的时候一起去重，也可以不考虑这些，只是循环，因为实际上去重只是提前把之后的循环做了。这里去重的话也是要注意不要把还没考虑的元素去掉，而是和已经考虑过的元素比较来去重。</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">three_sum</span>(<span class="hljs-keyword">mut</span> nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; &#123;
+        nums.<span class="hljs-title function_ invoke__">sort</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; = <span class="hljs-built_in">vec!</span>[];
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = nums.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..len - <span class="hljs-number">2</span> &#123;
+            <span class="hljs-keyword">if</span> nums[i] &gt; <span class="hljs-number">0</span> &#123;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">if</span> i &gt; <span class="hljs-number">0</span> &amp;&amp; nums[i] == nums[i - <span class="hljs-number">1</span>] &#123;
+                <span class="hljs-keyword">continue</span>;
+            &#125;
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">left</span> = i + <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">right</span> = len - <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">while</span> left &lt; right &#123;
+                <span class="hljs-keyword">if</span> nums[i] + nums[left] + nums[right] == <span class="hljs-number">0</span> &#123;
+                    ret.<span class="hljs-title function_ invoke__">push</span>(<span class="hljs-built_in">vec!</span>[nums[i], nums[left], nums[right]]);
+                    right -= <span class="hljs-number">1</span>;
+                    left += <span class="hljs-number">1</span>;
+                    <span class="hljs-comment">// 可以不写</span>
+                    <span class="hljs-keyword">while</span> left &lt; right &amp;&amp; nums[right] == nums[right + <span class="hljs-number">1</span>] &#123;
+                        right -= <span class="hljs-number">1</span>;
+                    &#125;
+                    <span class="hljs-comment">// 可以不写</span>
+                    <span class="hljs-keyword">while</span> left &lt; right &amp;&amp; nums[left] == nums[left - <span class="hljs-number">1</span>] &#123;
+                        left += <span class="hljs-number">1</span>;
+                    &#125;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> nums[i] + nums[left] + nums[right] &gt; <span class="hljs-number">0</span> &#123;
+                    right -= <span class="hljs-number">1</span>;
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    left += <span class="hljs-number">1</span>;
+                &#125;
+            &#125;
         &#125;
-        sum
+        ret
+    &#125;
+&#125;</code></pre></div>
+<h4 id="四数之和"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum/">18.
+四数之和</a></h4>
+<p>和上面的三数之和基本一样</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">use</span> std::cmp::Ordering;
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">four_sum</span>(<span class="hljs-keyword">mut</span> nums: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, target: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;&gt; = <span class="hljs-built_in">vec!</span>[];
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = nums.<span class="hljs-title function_ invoke__">len</span>();
+        <span class="hljs-keyword">if</span> len &lt; <span class="hljs-number">4</span> &#123;
+            <span class="hljs-keyword">return</span> ret;
+        &#125;
+        nums.<span class="hljs-title function_ invoke__">sort</span>();
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">j</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..len &#123;
+            <span class="hljs-keyword">if</span> nums[j] &gt; target &amp;&amp; (nums[j] &gt; <span class="hljs-number">0</span> || target &gt; <span class="hljs-number">0</span>) &#123;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">if</span> j &gt; <span class="hljs-number">0</span> &amp;&amp; nums[j - <span class="hljs-number">1</span>] == nums[j] &#123;
+                <span class="hljs-keyword">continue</span>;
+            &#125;
+            <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> j + <span class="hljs-number">1</span>..len &#123;
+                <span class="hljs-keyword">if</span> nums[j] + nums[i] &gt; target &amp;&amp; (nums[j] + nums[i] &gt;= <span class="hljs-number">0</span> || target &gt;= <span class="hljs-number">0</span>) &#123;
+                    <span class="hljs-keyword">break</span>;
+                &#125;
+                <span class="hljs-keyword">if</span> i &gt; j + <span class="hljs-number">1</span> &amp;&amp; nums[i - <span class="hljs-number">1</span>] == nums[i] &#123;
+                    <span class="hljs-keyword">continue</span>;
+                &#125;
+                <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (i + <span class="hljs-number">1</span>, len - <span class="hljs-number">1</span>);
+                <span class="hljs-keyword">while</span> l &lt; r &#123;
+                    <span class="hljs-title function_ invoke__">match</span> (nums[j] + nums[i] + nums[l] + nums[r]).<span class="hljs-title function_ invoke__">cmp</span>(&amp;target) &#123;
+                        Ordering::Equal =&gt; &#123;
+                            ret.<span class="hljs-title function_ invoke__">push</span>(<span class="hljs-built_in">vec!</span>[nums[j], nums[i], nums[l], nums[r]]);
+                            l += <span class="hljs-number">1</span>;
+                            r -= <span class="hljs-number">1</span>;
+                            <span class="hljs-keyword">while</span> l &lt; r &amp;&amp; nums[l] == nums[l - <span class="hljs-number">1</span>] &#123;
+                                l += <span class="hljs-number">1</span>;
+                            &#125;
+                            <span class="hljs-keyword">while</span> l &lt; r &amp;&amp; nums[r] == nums[r + <span class="hljs-number">1</span>] &#123;
+                                r -= <span class="hljs-number">1</span>;
+                            &#125;
+                        &#125;
+                        Ordering::Less =&gt; &#123;
+                            l += <span class="hljs-number">1</span>;
+                        &#125;
+                        Ordering::Greater =&gt; &#123;
+                            r -= <span class="hljs-number">1</span>;
+                        &#125;
+                    &#125;
+                &#125;
+            &#125;
+        &#125;
+        ret
     &#125;
 &#125;</code></pre></div>
 
@@ -325,8 +459,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>快乐数</div>
-      <div>https://charliezjj.github.io/note/Algorithm/Hash/HappyNumber/</div>
+      <div>两数之和</div>
+      <div>https://charliezjj.github.io/note/Algorithm/Hash/TwoSum/</div>
     </div>
     <div class="license-meta">
       
@@ -370,18 +504,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/note/Algorithm/Hash/TwoSum/" title="两数之和">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">两数之和</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/note/Algorithm/Hash/IntersectionofTwoArrays/" title="两个数组的交集">
-                        <span class="hidden-mobile">两个数组的交集</span>
+                      <a href="/note/Algorithm/Hash/HappyNumber/" title="快乐数">
+                        <span class="hidden-mobile">快乐数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
