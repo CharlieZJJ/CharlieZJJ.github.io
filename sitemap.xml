@@ -173,14 +173,7 @@
 
   
   <url>
-    <loc>https://charliezjj.github.io/tags/Array/</loc>
-    <lastmod>2023-04-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://charliezjj.github.io/tags/Hash/</loc>
+    <loc>https://charliezjj.github.io/tags/Real-Time-Rendering/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -201,7 +194,14 @@
   </url>
   
   <url>
-    <loc>https://charliezjj.github.io/tags/Real-Time-Rendering/</loc>
+    <loc>https://charliezjj.github.io/tags/Hash/</loc>
+    <lastmod>2023-04-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://charliezjj.github.io/tags/Array/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -210,14 +210,14 @@
 
   
   <url>
-    <loc>https://charliezjj.github.io/categories/Algorithm/</loc>
+    <loc>https://charliezjj.github.io/categories/Graphics/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://charliezjj.github.io/categories/Graphics/</loc>
+    <loc>https://charliezjj.github.io/categories/Algorithm/</loc>
     <lastmod>2023-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
