@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>快乐数</title>
+    <link href="/note/Algorithm/Hash/HappyNumber/"/>
+    <url>/note/Algorithm/Hash/HappyNumber/</url>
+    
+    <content type="html"><![CDATA[<h4 id="快乐数"><a href="https://leetcode.cn/problems/happy-number/">202. 快乐数</a></h4><p>挺简单的，主要是如果可以无限循环的话，就代表会出现重复数字，也就是说出现重复数字就不是快乐数。</p><div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">is_happy</span>(<span class="hljs-keyword">mut</span> n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;        <span class="hljs-keyword">use</span> std::collections::HashSet;        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">set</span> = HashSet::<span class="hljs-title function_ invoke__">new</span>();        set.<span class="hljs-title function_ invoke__">insert</span>(n);        <span class="hljs-keyword">while</span> <span class="hljs-literal">true</span> &#123;            <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span> &#123;                <span class="hljs-keyword">break</span>;            &#125;            n = <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">sum</span>(n);            <span class="hljs-keyword">if</span> set.<span class="hljs-title function_ invoke__">contains</span>(&amp;n) &#123;                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;            &#125;            set.<span class="hljs-title function_ invoke__">insert</span>(n);        &#125;        <span class="hljs-literal">true</span>    &#125;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">sum</span>(<span class="hljs-keyword">mut</span> n: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sum</span> = <span class="hljs-number">0</span>;        <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span> &#123;            <span class="hljs-keyword">let</span> <span class="hljs-variable">val</span> = n % <span class="hljs-number">10</span>;            sum += val * val;            n /= <span class="hljs-number">10</span>;        &#125;        sum    &#125;&#125;</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hash</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>两个数组的交集</title>
     <link href="/note/Algorithm/Hash/IntersectionofTwoArrays/"/>
     <url>/note/Algorithm/Hash/IntersectionofTwoArrays/</url>
