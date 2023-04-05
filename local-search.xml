@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>两个数组的交集</title>
+    <link href="/note/Algorithm/Hash/IntersectionofTwoArrays/"/>
+    <url>/note/Algorithm/Hash/IntersectionofTwoArrays/</url>
+    
+    <content type="html"><![CDATA[<h4 id="两个数组的交集"><a href="https://leetcode.cn/problems/intersection-of-two-arrays/">349.两个数组的交集</a></h4><p>就是先遍历第一个数组，把其中出现的数组做个标记，然后遍历第二个，把符合要求的放进HashSet即可。</p><div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">intersection</span>(nums1: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, nums2: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;        <span class="hljs-keyword">use</span> std::collections::HashSet;        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">exist</span> = [<span class="hljs-literal">false</span>; <span class="hljs-number">1005</span>];        nums1.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|&amp;i| exist[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] = <span class="hljs-literal">true</span>);        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = HashSet::<span class="hljs-title function_ invoke__">new</span>();        nums2.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|&amp;i| &#123;            <span class="hljs-keyword">if</span> exist[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] &#123;                ret.<span class="hljs-title function_ invoke__">insert</span>(i);            &#125;        &#125;);        ret.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()    &#125;&#125;</code></pre></div><h4 id="两个数组的交集-ii"><a href="https://leetcode.cn/problems/intersection-of-two-arrays-ii/">350.两个数组的交集 II</a></h4><p>这个也简单，记录一下出现的次数就行了</p><div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">intersect</span>(nums1: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;, nums2: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt;) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; &#123;        <span class="hljs-keyword">use</span> std::collections::HashSet;        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">exist</span> = [<span class="hljs-number">0</span>; <span class="hljs-number">1005</span>];        nums1.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|&amp;i| exist[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] += <span class="hljs-number">1</span>);        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">ret</span> = <span class="hljs-built_in">vec!</span>[];        nums2.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">for_each</span>(|&amp;i| &#123;            <span class="hljs-keyword">if</span> exist[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] &gt; <span class="hljs-number">0</span> &#123;                ret.<span class="hljs-title function_ invoke__">push</span>(i);                exist[i <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>] -= <span class="hljs-number">1</span>;            &#125;        &#125;);        ret    &#125;&#125;</code></pre></div>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hash</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>有效的字母异位词</title>
     <link href="/note/Algorithm/Hash/ValidAnagram/"/>
     <url>/note/Algorithm/Hash/ValidAnagram/</url>
