@@ -16,24 +16,22 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="344. 反转字符串 就是双指针，头尾各一个，然后向中间移动：   图片取自代码随想录，如有侵权立即删除  impl Solution &amp;#123;     pub fn reverse_string(s: &amp;mut Vec&lt;char&gt;) &amp;#123;         let len &#x3D; s.len();         let (mut l, mut r) &#x3D;">
+    <meta name="description" content="剑指 Offer 05. 替换空格 这题真挺简单： impl Solution &amp;#123;     pub fn replace_space(s: String) -&gt; String &amp;#123;         let mut sb: Vec&lt;char&gt; &#x3D; s.chars().collect();         let mut count &#x3D; sb">
 <meta property="og:type" content="article">
-<meta property="og:title" content="反转字符串">
-<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/String/ReverseString/index.html">
+<meta property="og:title" content="替换空格">
+<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/String/ReplaceSpace/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="344. 反转字符串 就是双指针，头尾各一个，然后向中间移动：   图片取自代码随想录，如有侵权立即删除  impl Solution &amp;#123;     pub fn reverse_string(s: &amp;mut Vec&lt;char&gt;) &amp;#123;         let len &#x3D; s.len();         let (mut l, mut r) &#x3D;">
+<meta property="og:description" content="剑指 Offer 05. 替换空格 这题真挺简单： impl Solution &amp;#123;     pub fn replace_space(s: String) -&gt; String &amp;#123;         let mut sb: Vec&lt;char&gt; &#x3D; s.chars().collect();         let mut count &#x3D; sb">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/ReverseString/344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.gif">
-<meta property="article:published_time" content="2023-04-06T03:46:37.000Z">
-<meta property="article:modified_time" content="2023-04-06T04:41:20.691Z">
+<meta property="article:published_time" content="2023-04-06T05:01:46.000Z">
+<meta property="article:modified_time" content="2023-04-06T05:33:19.965Z">
 <meta property="article:author" content="Charlie">
 <meta property="article:tag" content="String">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://charliezjj.github.io/note/Algorithm/String/ReverseString/344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.gif">
   
   
   
-  <title>反转字符串 - Charlie&#39;s Blog</title>
+  <title>替换空格 - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -175,7 +173,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="反转字符串"></span>
+            <span id="subtitle" data-typed-text="替换空格"></span>
           
         </div>
 
@@ -186,8 +184,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-06 11:46" pubdate>
-          2023年4月6日 中午
+        <time datetime="2023-04-06 13:01" pubdate>
+          2023年4月6日 下午
         </time>
       </span>
     
@@ -198,7 +196,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          754 字
+          1.7k 字
         
       </span>
     
@@ -209,7 +207,7 @@
         
         
         
-          7 分钟
+          15 分钟
         
       </span>
     
@@ -247,50 +245,89 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">反转字符串</h1>
+            <h1 style="display: none">替换空格</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="反转字符串"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string/">344.
-反转字符串</a></h4>
-<p>就是双指针，头尾各一个，然后向中间移动：</p>
-<figure>
-<img src="/note/Algorithm/String/ReverseString/344.%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2.gif" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
-<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
-</figure>
+                <h4 id="剑指-offer-05.-替换空格"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">剑指 Offer 05.
+替换空格</a></h4>
+<p>这题真挺简单：</p>
 <div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse_string</span>(s: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt;) &#123;
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = s.<span class="hljs-title function_ invoke__">len</span>();
-        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (<span class="hljs-number">0</span>, len - <span class="hljs-number">1</span>);
-        <span class="hljs-keyword">while</span> l &lt; r &#123;
-            <span class="hljs-keyword">let</span> <span class="hljs-variable">temp</span> = s[l];
-            s[l] = s[r];
-            s[r] = temp;
-            l += <span class="hljs-number">1</span>;
-            r -= <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">replace_space</span>(s: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sb</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt; = s.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">collect</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">count</span> = sb
+            .<span class="hljs-title function_ invoke__">iter</span>()
+            .<span class="hljs-title function_ invoke__">fold</span>(<span class="hljs-number">0</span>, |acc, c| <span class="hljs-keyword">if</span> *c == <span class="hljs-string">&#x27; &#x27;</span> &#123; acc + <span class="hljs-number">1</span> &#125; <span class="hljs-keyword">else</span> &#123; acc &#125;);
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">p_len</span> = sb.<span class="hljs-title function_ invoke__">len</span>();
+        sb.<span class="hljs-title function_ invoke__">resize</span>(sb.<span class="hljs-title function_ invoke__">len</span>() + count * <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;-&#x27;</span>);
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (p_len - <span class="hljs-number">1</span>, sb.<span class="hljs-title function_ invoke__">len</span>() - <span class="hljs-number">1</span>);
+        <span class="hljs-keyword">while</span> count &gt; <span class="hljs-number">0</span> &#123;
+            <span class="hljs-keyword">match</span> sb[l] &#123;
+                <span class="hljs-string">&#x27; &#x27;</span> =&gt; &#123;
+                    sb[r] = <span class="hljs-string">&#x27;0&#x27;</span>;
+                    sb[r - <span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;2&#x27;</span>;
+                    sb[r - <span class="hljs-number">2</span>] = <span class="hljs-string">&#x27;%&#x27;</span>;
+                    r -= <span class="hljs-number">3</span>;
+                    l -= <span class="hljs-number">1</span>;
+                    count -= <span class="hljs-number">1</span>;
+                &#125;
+                _ =&gt; &#123;
+                    sb[r] = sb[l];
+                    l -= <span class="hljs-number">1</span>;
+                    r -= <span class="hljs-number">1</span>;
+                &#125;
+            &#125;
         &#125;
+        sb.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()
     &#125;
 &#125;</code></pre></div>
-<h4 id="反转字符串-ii"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string-ii/">541. 反转字符串
-II</a></h4>
-<p>这道题和之前的很像，每次迭代2k就可以了。</p>
+<h4 id="反转字符串中的单词"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">151.
+反转字符串中的单词</a></h4>
+<p>这题也不难，主要是用个双指针就行。</p>
+<p>首先把整个字符串反转，这个时候单词的确也跟着反转了，但是单词内部的顺序也是反的，迭代过程之中正过来就行。每次迭代判断当前是不是空格，是的话留下一个（但是不保留字符串最开始的空格），然后去除之后的所有空格。不是的话迭代找到单词的界限，然后反转记录下来，至于去除空格的事情交给下一次迭代即可。最后需要考虑末尾是不是空格，因为能保证空格出现的话只有一个，所以判断count-1处是不是空格就好了。最后那个resize带的默认字符实际上没啥用，因为这里count必然小于当前的len。</p>
 <div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse_str</span>(s: <span class="hljs-type">String</span>, k: <span class="hljs-type">i32</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = s.<span class="hljs-title function_ invoke__">len</span>();
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vec</span> = s.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">collect</span>();
-        <span class="hljs-keyword">while</span> i &lt; len &#123;
-            <span class="hljs-keyword">if</span> i + k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span> &lt;= len &#123;
-                <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">reverse</span>(&amp;<span class="hljs-keyword">mut</span> vec, i, i + k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>);
-            &#125; <span class="hljs-keyword">else</span> &#123;
-                <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">reverse</span>(&amp;<span class="hljs-keyword">mut</span> vec, i, len);
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse_words</span>(s: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vc</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt; = s.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">collect</span>();
+        vc.<span class="hljs-title function_ invoke__">reverse</span>();
+        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> slow, <span class="hljs-keyword">mut</span> fast) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">count</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &#123;
+            <span class="hljs-keyword">match</span> vc[fast] &#123;
+                <span class="hljs-string">&#x27; &#x27;</span> =&gt; &#123;
+                    <span class="hljs-keyword">if</span> fast != <span class="hljs-number">0</span> &#123;
+                        vc[slow] = vc[fast];
+                        slow += <span class="hljs-number">1</span>;
+                        fast += <span class="hljs-number">1</span>;
+                        count += <span class="hljs-number">1</span>;
+                    &#125;
+                    <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &amp;&amp; vc[fast] == <span class="hljs-string">&#x27; &#x27;</span> &#123;
+                        fast += <span class="hljs-number">1</span>;
+                    &#125;
+                &#125;
+                _ =&gt; &#123;
+                    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">start</span> = fast;
+                    <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &amp;&amp; vc[fast] != <span class="hljs-string">&#x27; &#x27;</span> &#123;
+                        fast += <span class="hljs-number">1</span>;
+                    &#125;
+                    <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">reverse</span>(&amp;<span class="hljs-keyword">mut</span> vc, start, fast);
+                    count += fast - start;
+                    <span class="hljs-keyword">while</span> start &lt; fast &#123;
+                        vc[slow] = vc[start];
+                        slow += <span class="hljs-number">1</span>;
+                        start += <span class="hljs-number">1</span>;
+                    &#125;
+                &#125;
             &#125;
-            i += <span class="hljs-number">2</span> * k <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
         &#125;
-        vec.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()
+        count = <span class="hljs-keyword">if</span> vc[count - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27; &#x27;</span> &#123;
+            count - <span class="hljs-number">1</span>
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            count
+        &#125;;
+        vc.<span class="hljs-title function_ invoke__">resize</span>(count, <span class="hljs-string">&#x27;-&#x27;</span>);
+        vc.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()
     &#125;
-
     <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse</span>(s: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt;, start: <span class="hljs-type">usize</span>, end: <span class="hljs-type">usize</span>) &#123;
         <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (start, end - <span class="hljs-number">1</span>);
         <span class="hljs-keyword">while</span> l &lt; r &#123;
@@ -347,8 +384,8 @@ II</a></h4>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>反转字符串</div>
-      <div>https://charliezjj.github.io/note/Algorithm/String/ReverseString/</div>
+      <div>替换空格</div>
+      <div>https://charliezjj.github.io/note/Algorithm/String/ReplaceSpace/</div>
     </div>
     <div class="license-meta">
       
@@ -392,18 +429,12 @@ II</a></h4>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/note/Algorithm/String/ReplaceSpace/" title="替换空格">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">替换空格</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/note/Algorithm/Hash/TwoSum/" title="两数之和">
-                        <span class="hidden-mobile">两数之和</span>
+                      <a href="/note/Algorithm/String/ReverseString/" title="反转字符串">
+                        <span class="hidden-mobile">反转字符串</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
