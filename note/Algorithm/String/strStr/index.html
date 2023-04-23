@@ -16,22 +16,28 @@
   <meta name="author" content="Charlie">
   <meta name="keywords" content="">
   
-    <meta name="description" content="剑指 Offer 05. 替换空格 这题真挺简单： impl Solution &amp;#123;     pub fn replace_space(s: String) -&gt; String &amp;#123;         let mut sb: Vec&lt;char&gt; &#x3D; s.chars().collect();         let mut count &#x3D; sb">
+    <meta name="description" content="28. 找出字符串中第一个匹配项的下标 这道题用到的是KMP算法。KMP算法可以快速的在查找串S中找到模式串P出现的问题，其复杂度是\(O(m+n)\)的，其中m是P的长度，n是S的长度 KMP的核心思想是利用已知信息减少无效匹配次数，它会维护一个next数组，next数组可以理解为当匹配失败时，P要右移的距离。在匹配过程之中，如果当前字符不匹配，那么按照next数组跳转到下一个位置继续匹配">
 <meta property="og:type" content="article">
-<meta property="og:title" content="替换空格">
-<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/String/ReplaceSpace/index.html">
+<meta property="og:title" content="实现strStr">
+<meta property="og:url" content="https://charliezjj.github.io/note/Algorithm/String/strStr/index.html">
 <meta property="og:site_name" content="Charlie&#39;s Blog">
-<meta property="og:description" content="剑指 Offer 05. 替换空格 这题真挺简单： impl Solution &amp;#123;     pub fn replace_space(s: String) -&gt; String &amp;#123;         let mut sb: Vec&lt;char&gt; &#x3D; s.chars().collect();         let mut count &#x3D; sb">
+<meta property="og:description" content="28. 找出字符串中第一个匹配项的下标 这道题用到的是KMP算法。KMP算法可以快速的在查找串S中找到模式串P出现的问题，其复杂度是\(O(m+n)\)的，其中m是P的长度，n是S的长度 KMP的核心思想是利用已知信息减少无效匹配次数，它会维护一个next数组，next数组可以理解为当匹配失败时，P要右移的距离。在匹配过程之中，如果当前字符不匹配，那么按照next数组跳转到下一个位置继续匹配">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-06T05:01:46.000Z">
-<meta property="article:modified_time" content="2023-04-06T05:33:19.965Z">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/KMP%E7%B2%BE%E8%AE%B21.gif">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/20190513152123122.png">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/20190513153401250.png">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/20190513153644535.png">
+<meta property="og:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/20190513154013732.png">
+<meta property="article:published_time" content="2023-04-23T07:06:19.000Z">
+<meta property="article:modified_time" content="2023-04-23T08:49:47.033Z">
 <meta property="article:author" content="Charlie">
 <meta property="article:tag" content="String">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://charliezjj.github.io/note/Algorithm/String/strStr/KMP%E7%B2%BE%E8%AE%B21.gif">
   
   
   
-  <title>替换空格 - Charlie&#39;s Blog</title>
+  <title>实现strStr - Charlie&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -173,7 +179,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="替换空格"></span>
+            <span id="subtitle" data-typed-text="实现strStr"></span>
           
         </div>
 
@@ -184,8 +190,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-06 13:01" pubdate>
-          2023年4月6日 下午
+        <time datetime="2023-04-23 15:06" pubdate>
+          2023年4月23日 下午
         </time>
       </span>
     
@@ -196,7 +202,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          2.8k 字
         
       </span>
     
@@ -207,7 +213,7 @@
         
         
         
-          15 分钟
+          23 分钟
         
       </span>
     
@@ -245,100 +251,150 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">替换空格</h1>
+            <h1 style="display: none">实现strStr</h1>
             
             
               <div class="markdown-body">
                 
-                <h4 id="剑指-offer-05.-替换空格"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">剑指 Offer 05.
-替换空格</a></h4>
-<p>这题真挺简单：</p>
+                <h4 id="找出字符串中第一个匹配项的下标"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/">28.
+找出字符串中第一个匹配项的下标</a></h4>
+<p>这道题用到的是KMP算法。KMP算法可以快速的在查找串S中找到模式串P出现的问题，其复杂度是<span class="math inline">\(O(m+n)\)</span>的，其中m是P的长度，n是S的长度</p>
+<p>KMP的核心思想是利用已知信息减少无效匹配次数，它会维护一个next数组，next数组可以理解为当匹配失败时，P要右移的距离。在匹配过程之中，如果当前字符不匹配，那么按照next数组跳转到下一个位置继续匹配。</p>
+<p>假设我们现在有查找串S"aabaabaaf"和模式串P"aabaaf"，那么匹配过程应该如下：</p>
+<ul>
+<li>初始化迭代器i = 0, j = 0</li>
+<li>判断S[i]是否等于P[j]</li>
+<li>如果等于，那么向后移动一位i和j，继续第二步</li>
+<li>否则，根据跳转表next,将j设置为next[j-1]，继续第二步。</li>
+<li>直到比较完毕（i超出范围或j超出范围）</li>
+</ul>
+<figure>
+<img src="/note/Algorithm/String/strStr/KMP%E7%B2%BE%E8%AE%B21.gif" srcset="/img/loading.gif" lazyload alt="图片取自代码随想录，如有侵权立即删除">
+<figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption>
+</figure>
+<p>那么现在就存在两个问题：</p>
+<ul>
+<li>为什么可以这样跳转？</li>
+<li>如何求得next数组？</li>
+</ul>
+<p>先来回答第一个问题。</p>
+<p>首先给出这个模式串的next数组，方便解释：</p>
+<div class="code-wrapper"><pre><code class="hljs rust">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>]</code></pre></div>
+<p>当i, j迭代到5的时候，此时S[i] != P[j]，这个时候，j将会被设置为next[4]
+= 2，这个的意思其实就是，将j设置为最长相等前后缀的后一位！</p>
+<p>所谓前缀，就是指的从首字母开始，不包含尾字母的子串，后缀就是包含尾字母不包含首字母的子串，那么，可以找到aabaa的所有前缀：a,
+aa, aab, aaba, aaba，所有后缀：a, aa, baa,
+abaa，可以发现最长相等前后缀的长度就是aa，也就是2。这个东西就可以让我们减少多次无用的比较。</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// 现在不匹配</span>
+a a b a a b a a f
+a a b a a f
+<span class="hljs-comment">// 右移一位，不匹配</span>
+a a b a a b a a f
+  a a b a a f
+<span class="hljs-comment">// 继续右移</span>
+a a b a a b a a f
+    a a b a a f
+<span class="hljs-comment">// 直到匹配</span>
+a a b a a b a a f
+      a a b a a f</code></pre></div>
+<p>从上面的过程可以看出，这其实就是利用对称性，将前缀直接移动到后缀的位置，为什么中间不会有匹配呢？因为经过你的计算，你找到的其实是一个可移动的最大距离。事实上因为这里利用的其实是一种特殊的对称性，所以你在这个移动距离之间肯定就不会存在匹配的情况了。这样移动可以通过对称性充分利用已经匹配过的信息从而减少无用匹配的次数。</p>
+<p>那么问题2，如何求next数组呢？其实也算是一种kmp的应用，算是递归。</p>
+<ul>
+<li><p>初始化next[0]=0，因为单个字符是没有相等前后缀的。然后设定两个迭代器，i和j，其中i代表后缀的尾字母，j代表前缀的尾字母，同时也代表了最长相等前后缀的长度。j设定为0，i设定为1。迭代i。</p></li>
+<li><p>判断P[i] 是否等于 P[j]</p></li>
+<li><p>如果等于，那么j++，然后将next[i]设为j，进入下一次循环。</p></li>
+<li><p>否则，执行j = next[j - 1]直到j &lt;= 0或者P[i] == P[j]。</p></li>
+</ul>
+<p>最后就能求出next数组。最难理解的是为什么这里要执行j = next[j -
+1]。</p>
+<p>可以这么想，现在假定对称性就是最长相等前后缀，当前j的前面没有任何对称性的时候，只需要比较j和首字母即可获得最长相等前后缀。而对称性为1时，只需要比较当前字符和第二个字符即可，因为j-1位置的字符已经和1相等。每一次i迭代后，j前面的j个字母必定和i前面的j个字母相等：</p>
+<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-comment">// 1</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+a a b a a f
+j i
+<span class="hljs-comment">// 2</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+a a b a a f
+  j i
+<span class="hljs-comment">// 3</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+a a b a a f
+j     i
+<span class="hljs-comment">// 4</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+a a b a a f
+  j     i
+<span class="hljs-comment">// 5</span>
+<span class="hljs-number">0</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>
+a a b a a f
+    j     i</code></pre></div>
+<p>于是我们可以直接比较j和i所代表的字符来判断对称性是否会增加。如果不幸二者不等，那么j就要回溯，那么问题来了，为什么可以直接按照next数组来回溯而非一个个的检查？这里很难以理解，接下来引用并总结另一位<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37174526/article/details/90141833">大神的博客</a></p>
+<figure>
+<img src="/note/Algorithm/String/strStr/20190513152123122.png" srcset="/img/loading.gif" lazyload alt="图片取自csdn，如有侵权立即删除">
+<figcaption aria-hidden="true">图片取自csdn，如有侵权立即删除</figcaption>
+</figure>
+<p>在定义上有些小差别，就不细讲了，想看的可以自己去<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37174526/article/details/90141833">大神的博客</a>看。</p>
+<p>这里已经得到了next[j] = 6，也就是k=6。而next[k] =
+2。接下来取其中的一部分，标记为绿色：</p>
+<figure>
+<img src="/note/Algorithm/String/strStr/20190513153401250.png" srcset="/img/loading.gif" lazyload alt="图片取自csdn，如有侵权立即删除">
+<figcaption aria-hidden="true">图片取自csdn，如有侵权立即删除</figcaption>
+</figure>
+<p>这个绿色是怎么选的呢？没错，就是next[k]。为什么这么选呢？因为这里是k的最长相等前后缀，可以保证求出next[j+1]也会是最长的。</p>
+<p>可以得到： <span class="math display">\[
+t[k - next[k]]..t[k-1] = t[j-next[k]]..t[j-1]
+\]</span>
+也就是绿色部分相等。而根据next[k]的定义可以得到他们对应的前缀：</p>
+<p><img src="/note/Algorithm/String/strStr/20190513153644535.png" srcset="/img/loading.gif" lazyload alt="图片取自csdn，如有侵权立即删除"> <span class="math display">\[
+t[0]..t[next[k]-1]=t[k-next[k]]..t[k-1]
+\]</span> 两边代换可以得到： <span class="math display">\[
+t[0]..t[next[k]-1]=t[j-next[k]]..t[j-1]
+\]</span> 也就是说：</p>
+<figure>
+<img src="/note/Algorithm/String/strStr/20190513154013732.png" srcset="/img/loading.gif" lazyload alt="图片取自csdn，如有侵权立即删除">
+<figcaption aria-hidden="true">图片取自csdn，如有侵权立即删除</figcaption>
+</figure>
+<p>①号的黄色部分和②号的绿色部分是相等的。可以理解为这就是0..j-1之中第二大的前后缀！接下来就是递归的做，首先比较t[k']和t[j]相等的话皆大欢喜，否则继续递归，直到k'=0。</p>
+<p>那么最后的strStr代码：</p>
 <div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">replace_space</span>(s: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sb</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt; = s.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">collect</span>();
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">count</span> = sb
-            .<span class="hljs-title function_ invoke__">iter</span>()
-            .<span class="hljs-title function_ invoke__">fold</span>(<span class="hljs-number">0</span>, |acc, c| <span class="hljs-keyword">if</span> *c == <span class="hljs-string">&#x27; &#x27;</span> &#123; acc + <span class="hljs-number">1</span> &#125; <span class="hljs-keyword">else</span> &#123; acc &#125;);
-        <span class="hljs-keyword">let</span> <span class="hljs-variable">p_len</span> = sb.<span class="hljs-title function_ invoke__">len</span>();
-        sb.<span class="hljs-title function_ invoke__">resize</span>(sb.<span class="hljs-title function_ invoke__">len</span>() + count * <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;-&#x27;</span>);
-        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (p_len - <span class="hljs-number">1</span>, sb.<span class="hljs-title function_ invoke__">len</span>() - <span class="hljs-number">1</span>);
-        <span class="hljs-keyword">while</span> count &gt; <span class="hljs-number">0</span> &#123;
-            <span class="hljs-keyword">match</span> sb[l] &#123;
-                <span class="hljs-string">&#x27; &#x27;</span> =&gt; &#123;
-                    sb[r] = <span class="hljs-string">&#x27;0&#x27;</span>;
-                    sb[r - <span class="hljs-number">1</span>] = <span class="hljs-string">&#x27;2&#x27;</span>;
-                    sb[r - <span class="hljs-number">2</span>] = <span class="hljs-string">&#x27;%&#x27;</span>;
-                    r -= <span class="hljs-number">3</span>;
-                    l -= <span class="hljs-number">1</span>;
-                    count -= <span class="hljs-number">1</span>;
-                &#125;
-                _ =&gt; &#123;
-                    sb[r] = sb[l];
-                    l -= <span class="hljs-number">1</span>;
-                    r -= <span class="hljs-number">1</span>;
-                &#125;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">str_str</span>(haystack: <span class="hljs-type">String</span>, needle: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">i32</span> &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">next</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0usize</span>; needle.<span class="hljs-title function_ invoke__">len</span>()];
+        <span class="hljs-keyword">if</span> haystack.<span class="hljs-title function_ invoke__">len</span>() &lt; needle.<span class="hljs-title function_ invoke__">len</span>() &#123;
+            <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+        &#125;
+        <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">get_next</span>(&amp;needle, &amp;<span class="hljs-keyword">mut</span> next);
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">j</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">ch</span> = haystack.<span class="hljs-title function_ invoke__">chars</span>().collect::&lt;<span class="hljs-type">Vec</span>&lt;_&gt;&gt;();
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">cn</span> = needle.<span class="hljs-title function_ invoke__">chars</span>().collect::&lt;<span class="hljs-type">Vec</span>&lt;_&gt;&gt;();
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..ch.<span class="hljs-title function_ invoke__">len</span>() &#123;
+            <span class="hljs-keyword">while</span> j &gt; <span class="hljs-number">0</span> &amp;&amp; ch[i] != cn[j] &#123;
+                j = next[j - <span class="hljs-number">1</span>];
+            &#125;
+            <span class="hljs-keyword">if</span> ch[i] == cn[j] &#123;
+                j += <span class="hljs-number">1</span>;
+            &#125;
+            <span class="hljs-keyword">if</span> j == cn.<span class="hljs-title function_ invoke__">len</span>() &#123;
+                <span class="hljs-title function_ invoke__">return</span> (i - j + <span class="hljs-number">1</span>) <span class="hljs-keyword">as</span> <span class="hljs-type">i32</span>;
             &#125;
         &#125;
-        sb.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()
+        -<span class="hljs-number">1</span>
     &#125;
-&#125;</code></pre></div>
-<h4 id="反转字符串中的单词"><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">151.
-反转字符串中的单词</a></h4>
-<p>这题也不难，主要是用个双指针就行。</p>
-<p>首先把整个字符串反转，这个时候单词的确也跟着反转了，但是单词内部的顺序也是反的，迭代过程之中正过来就行。每次迭代判断当前是不是空格，是的话留下一个（但是不保留字符串最开始的空格），然后去除之后的所有空格。不是的话迭代找到单词的界限，然后反转记录下来，至于去除空格的事情交给下一次迭代即可。最后需要考虑末尾是不是空格，因为能保证空格出现的话只有一个，所以判断count-1处是不是空格就好了。最后那个resize带的默认字符实际上没啥用，因为这里count必然小于当前的len。</p>
-<div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse_words</span>(s: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">String</span> &#123;
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">vc</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt; = s.<span class="hljs-title function_ invoke__">chars</span>().<span class="hljs-title function_ invoke__">collect</span>();
-        vc.<span class="hljs-title function_ invoke__">reverse</span>();
-        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> slow, <span class="hljs-keyword">mut</span> fast) = (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">count</span> = <span class="hljs-number">0</span>;
-        <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &#123;
-            <span class="hljs-keyword">match</span> vc[fast] &#123;
-                <span class="hljs-string">&#x27; &#x27;</span> =&gt; &#123;
-                    <span class="hljs-keyword">if</span> fast != <span class="hljs-number">0</span> &#123;
-                        vc[slow] = vc[fast];
-                        slow += <span class="hljs-number">1</span>;
-                        fast += <span class="hljs-number">1</span>;
-                        count += <span class="hljs-number">1</span>;
-                    &#125;
-                    <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &amp;&amp; vc[fast] == <span class="hljs-string">&#x27; &#x27;</span> &#123;
-                        fast += <span class="hljs-number">1</span>;
-                    &#125;
-                &#125;
-                _ =&gt; &#123;
-                    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">start</span> = fast;
-                    <span class="hljs-keyword">while</span> fast &lt; vc.<span class="hljs-title function_ invoke__">len</span>() &amp;&amp; vc[fast] != <span class="hljs-string">&#x27; &#x27;</span> &#123;
-                        fast += <span class="hljs-number">1</span>;
-                    &#125;
-                    <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">reverse</span>(&amp;<span class="hljs-keyword">mut</span> vc, start, fast);
-                    count += fast - start;
-                    <span class="hljs-keyword">while</span> start &lt; fast &#123;
-                        vc[slow] = vc[start];
-                        slow += <span class="hljs-number">1</span>;
-                        start += <span class="hljs-number">1</span>;
-                    &#125;
-                &#125;
+
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_next</span>(pattern: &amp;<span class="hljs-type">str</span>, next: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">usize</span>&gt;) &#123;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">ch</span> = pattern.<span class="hljs-title function_ invoke__">chars</span>().collect::&lt;<span class="hljs-type">Vec</span>&lt;_&gt;&gt;();
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">j</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..ch.<span class="hljs-title function_ invoke__">len</span>() &#123;
+            <span class="hljs-keyword">while</span> j &gt; <span class="hljs-number">0</span> &amp;&amp; ch[i] != ch[j] &#123;
+                j = next[j - <span class="hljs-number">1</span>];
             &#125;
-        &#125;
-        count = <span class="hljs-keyword">if</span> vc[count - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27; &#x27;</span> &#123;
-            count - <span class="hljs-number">1</span>
-        &#125; <span class="hljs-keyword">else</span> &#123;
-            count
-        &#125;;
-        vc.<span class="hljs-title function_ invoke__">resize</span>(count, <span class="hljs-string">&#x27;-&#x27;</span>);
-        vc.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">collect</span>()
-    &#125;
-    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">reverse</span>(s: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">char</span>&gt;, start: <span class="hljs-type">usize</span>, end: <span class="hljs-type">usize</span>) &#123;
-        <span class="hljs-keyword">let</span> (<span class="hljs-keyword">mut</span> l, <span class="hljs-keyword">mut</span> r) = (start, end - <span class="hljs-number">1</span>);
-        <span class="hljs-keyword">while</span> l &lt; r &#123;
-            <span class="hljs-keyword">let</span> <span class="hljs-variable">temp</span> = s[l];
-            s[l] = s[r];
-            s[r] = temp;
-            l += <span class="hljs-number">1</span>;
-            r -= <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">if</span> ch[i] == ch[j] &#123;
+                j += <span class="hljs-number">1</span>;
+            &#125;
+            next[i] = j;
         &#125;
     &#125;
 &#125;</code></pre></div>
+<p>真是妙！！！！</p>
 
                 
               </div>
@@ -384,8 +440,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>替换空格</div>
-      <div>https://charliezjj.github.io/note/Algorithm/String/ReplaceSpace/</div>
+      <div>实现strStr</div>
+      <div>https://charliezjj.github.io/note/Algorithm/String/strStr/</div>
     </div>
     <div class="license-meta">
       
@@ -397,7 +453,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月6日</div>
+          <div>2023年4月23日</div>
         </div>
       
       
@@ -429,18 +485,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/note/Algorithm/String/strStr/" title="实现strStr">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">实现strStr</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/note/Algorithm/String/ReverseString/" title="反转字符串">
-                        <span class="hidden-mobile">反转字符串</span>
+                      <a href="/note/Algorithm/String/ReplaceSpace/" title="替换空格">
+                        <span class="hidden-mobile">替换空格</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
