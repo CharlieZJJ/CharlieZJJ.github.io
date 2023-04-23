@@ -1,3 +1,4 @@
+https://charliezjj.github.io/note/Algorithm/String/RepeatedString/
 https://charliezjj.github.io/note/Algorithm/String/strStr/
 https://charliezjj.github.io/note/Algorithm/String/ReverseString/
 https://charliezjj.github.io/note/Algorithm/String/ReplaceSpace/
@@ -20,11 +21,11 @@ https://charliezjj.github.io/note/Graphics/Math/ViewTransform/
 https://charliezjj.github.io/note/Graphics/RealTimeRendering/rtr-chapter2/
 https://charliezjj.github.io/note/Graphics/RealTimeRendering/rtr-chapter1/
 https://charliezjj.github.io/
-https://charliezjj.github.io/tags/List/
 https://charliezjj.github.io/tags/Array/
-https://charliezjj.github.io/tags/Real-Time-Rendering/
-https://charliezjj.github.io/tags/String/
-https://charliezjj.github.io/tags/Transform/
 https://charliezjj.github.io/tags/Hash/
+https://charliezjj.github.io/tags/String/
+https://charliezjj.github.io/tags/List/
+https://charliezjj.github.io/tags/Transform/
+https://charliezjj.github.io/tags/Real-Time-Rendering/
 https://charliezjj.github.io/categories/Algorithm/
 https://charliezjj.github.io/categories/Graphics/

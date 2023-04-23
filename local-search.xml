@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>重复的子串</title>
+    <link href="/note/Algorithm/String/RepeatedString/"/>
+    <url>/note/Algorithm/String/RepeatedString/</url>
+    
+    <content type="html"><![CDATA[<h4 id="重复的子字符串"><a href="https://leetcode.cn/problems/repeated-substring-pattern/">459.重复的子字符串</a></h4><p>这道题也可以用KMP来做，首先我们假定这个字符串符合题目描述。那么我们要做的就是找到这个最小单位，最后看是否符合我们的假设即可。</p><p>对于一个重复的字符串来说：</p><figure><img src="/note/Algorithm/String/RepeatedString/20220728212157.png" alt="图片取自代码随想录，如有侵权立即删除"><figcaption aria-hidden="true">图片取自代码随想录，如有侵权立即删除</figcaption></figure><ul><li>t[01] = k[01]</li><li>k[01] = s[23]</li><li>t[01] = s[01]</li></ul><p>所以可以得到s[01] = s[23]。</p><p>什么意思呢？就是我们不断做这个操作，会发现这个s[01]很特殊，他就是组成字符串的单元。</p><p>另外，他也是整个字符串的最大相等前后缀的前后缀未相交的部分！</p><p>也就是说只要求得next数组，并得到这部分的长度，然后判断字符串的长度和这个部分的长度是否能整除即可！</p><p>代码：</p><div class="code-wrapper"><pre><code class="hljs rust"><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Solution</span> &#123;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get_next</span>(pattern: &amp;<span class="hljs-type">str</span>, next: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">usize</span>&gt;) &#123;        <span class="hljs-keyword">let</span> <span class="hljs-variable">ch</span> = pattern.<span class="hljs-title function_ invoke__">chars</span>().collect::&lt;<span class="hljs-type">Vec</span>&lt;_&gt;&gt;();        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">j</span> = <span class="hljs-number">0</span>;        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..ch.<span class="hljs-title function_ invoke__">len</span>() &#123;            <span class="hljs-keyword">while</span> j &gt; <span class="hljs-number">0</span> &amp;&amp; ch[i] != ch[j] &#123;                j = next[j - <span class="hljs-number">1</span>];            &#125;            <span class="hljs-keyword">if</span> ch[i] == ch[j] &#123;                j += <span class="hljs-number">1</span>;            &#125;            next[i] = j;        &#125;    &#125;    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">repeated_substring_pattern</span>(s: <span class="hljs-type">String</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &#123;        <span class="hljs-keyword">let</span> <span class="hljs-variable">len</span> = s.<span class="hljs-title function_ invoke__">len</span>();        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">next</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0usize</span>; s.<span class="hljs-title function_ invoke__">len</span>()];        <span class="hljs-keyword">Self</span>::<span class="hljs-title function_ invoke__">get_next</span>(&amp;s, &amp;<span class="hljs-keyword">mut</span> next);        <span class="hljs-keyword">let</span> <span class="hljs-variable">sl</span> = len - next[len - <span class="hljs-number">1</span>];        sl != len &amp;&amp; len % sl == <span class="hljs-number">0</span>    &#125;&#125;</code></pre></div><p>要注意的是需要保证next[len -1]不是0，否则就是用自己和自己除了，那样就不能做测试了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Algorithm</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>String</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>实现strStr</title>
     <link href="/note/Algorithm/String/strStr/"/>
     <url>/note/Algorithm/String/strStr/</url>
